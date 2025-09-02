@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emlak Sitesi - Gayrimenkul İlanları</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>EmlakSite</h1>
+                </div>
+                <nav class="nav">
+                    <a href="/" class="nav-link active">İLANLARIMIZ</a>
+                    <a href="/login" class="nav-link admin-link">
+                        <i class="fas fa-cog"></i>
+                        YÖNETİM
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero">
+                <h2>En İyi Gayrimenkul İlanları</h2>
+                <p>Hayalinizdeki evi bulmak için doğru yerdesiniz</p>
+            </section>
+
+            <!-- Properties Grid -->
+            <section class="properties-section">
+                <div class="section-header">
+                    <h3>Öne Çıkan İlanlar</h3>
+                    <div class="properties-count">
+                        <span id="propertyCount">Yükleniyor...</span> ilan
+                    </div>
+                </div>
+                
+                <div id="propertiesGrid" class="properties-grid">
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>İlanlar yükleniyor...</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Property Detail Modal -->
+    <div id="propertyModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalContent">
+                <!-- Modal content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close-contact">&times;</span>
+            <div class="contact-form-container">
+                <h3>İletişime Geçin</h3>
+                <form id="contactForm">
+                    <input type="hidden" id="propertyIdInput" name="propertyId">
+                    <div class="form-group">
+                        <label for="contactName">Ad Soyad</label>
+                        <input type="text" id="contactName" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactEmail">Email</label>
+                        <input type="email" id="contactEmail" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactPhone">Telefon</label>
+                        <input type="tel" id="contactPhone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactMessage">Mesajınız</label>
+                        <textarea id="contactMessage" name="message" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                        Mesaj Gönder
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>İletişim</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-phone"></i> +90 212 555 0123</p>
+                        <p><i class="fas fa-envelope"></i> info@emlaksite.com</p>
+                        <p><i class="fas fa-map-marker-alt"></i> İstanbul, Türkiye</p>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Hakkımızda</h4>
+                    <p>Güvenilir gayrimenkul hizmetleri sunuyoruz. Hayalinizdeki evi bulmanızda size yardımcı olmak için buradayız.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Sosyal Medya</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 EmlakSite. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

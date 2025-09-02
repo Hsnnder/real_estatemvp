@@ -1,0 +1,255 @@
+/* Admin-specific styles */
+.admin-main {
+    background: #f8f9fa;
+    min-height: calc(100vh - 120px);
+}
+
+.admin-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: calc(var(--spacing) * 4);
+    align-items: start;
+}
+
+.admin-section {
+    background: white;
+    padding: calc(var(--spacing) * 4);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.admin-section h2 {
+    color: var(--primary-color);
+    margin-bottom: calc(var(--spacing) * 4);
+    font-weight: 600;
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: calc(var(--spacing));
+}
+
+/* Property Form */
+.property-form {
+    max-width: 100%;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: calc(var(--spacing) * 2);
+}
+
+.form-group {
+    margin-bottom: calc(var(--spacing) * 3);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: calc(var(--spacing));
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: calc(var(--spacing) * 1.5);
+    border: 2px solid #e9ecef;
+    border-radius: var(--border-radius);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.1);
+}
+
+/* File Upload */
+.file-upload {
+    position: relative;
+    border: 2px dashed #bdc3c7;
+    border-radius: var(--border-radius);
+    padding: calc(var(--spacing) * 4);
+    text-align: center;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.file-upload:hover {
+    border-color: var(--accent-color);
+    background: rgba(243, 156, 18, 0.05);
+}
+
+.file-upload input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+}
+
+.upload-text {
+    pointer-events: none;
+}
+
+.upload-text i {
+    font-size: 2rem;
+    color: var(--accent-color);
+    margin-bottom: calc(var(--spacing));
+}
+
+.upload-text p {
+    color: #7f8c8d;
+    font-weight: 500;
+}
+
+.image-preview {
+    margin-top: calc(var(--spacing) * 2);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: calc(var(--spacing));
+}
+
+.preview-image {
+    position: relative;
+    height: 80px;
+    background-size: cover;
+    background-position: center;
+    border-radius: var(--border-radius);
+    border: 2px solid #e9ecef;
+}
+
+/* Admin Properties List */
+.admin-properties-list {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.admin-property-card {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: var(--border-radius);
+    padding: calc(var(--spacing) * 2);
+    margin-bottom: calc(var(--spacing) * 2);
+    transition: var(--transition);
+}
+
+.admin-property-card:hover {
+    box-shadow: var(--shadow);
+}
+
+.admin-property-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: calc(var(--spacing));
+}
+
+.admin-property-title {
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.property-status {
+    padding: calc(var(--spacing) / 2) calc(var(--spacing));
+    border-radius: calc(var(--border-radius) / 2);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.status-active {
+    background: rgba(39, 174, 96, 0.1);
+    color: var(--success-color);
+}
+
+.status-inactive {
+    background: rgba(231, 76, 60, 0.1);
+    color: var(--error-color);
+}
+
+.admin-property-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: calc(var(--spacing));
+    margin-bottom: calc(var(--spacing) * 2);
+    font-size: 0.9rem;
+    color: #7f8c8d;
+}
+
+.admin-property-actions {
+    display: flex;
+    gap: calc(var(--spacing));
+}
+
+.btn-small {
+    padding: calc(var(--spacing) / 2) calc(var(--spacing));
+    font-size: 0.8rem;
+}
+
+.btn-edit {
+    background: #3498db;
+    color: white;
+}
+
+.btn-edit:hover {
+    background: #2980b9;
+}
+
+.btn-delete {
+    background: var(--error-color);
+    color: white;
+}
+
+.btn-delete:hover {
+    background: #c0392b;
+}
+
+/* Success/Error Messages */
+.message {
+    padding: calc(var(--spacing) * 2);
+    border-radius: var(--border-radius);
+    margin-bottom: calc(var(--spacing) * 3);
+    display: none;
+}
+
+.message.success {
+    background: rgba(39, 174, 96, 0.1);
+    color: var(--success-color);
+    border: 1px solid rgba(39, 174, 96, 0.3);
+}
+
+.message.error {
+    background: rgba(231, 76, 60, 0.1);
+    color: var(--error-color);
+    border: 1px solid rgba(231, 76, 60, 0.3);
+}
+
+/* Responsive Admin Layout */
+@media (max-width: 1024px) {
+    .admin-layout {
+        grid-template-columns: 1fr;
+        gap: calc(var(--spacing) * 3);
+    }
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .admin-property-info {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .admin-property-actions {
+        flex-direction: column;
+    }
+}

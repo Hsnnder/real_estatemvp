@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Emlak Sitesi</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>EmlakSite Admin</h1>
+                </div>
+                <nav class="nav">
+                    <a href="/" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        ANA SAYFA
+                    </a>
+                    <a href="/admin" class="nav-link active">
+                        <i class="fas fa-cog"></i>
+                        YÖNETİM
+                    </a>
+                    <button id="logoutBtn" class="nav-link logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        ÇIKIŞ
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main admin-main">
+        <div class="container">
+            <div class="admin-layout">
+                <!-- Add Property Form -->
+                <section class="admin-section">
+                    <h2>Yeni İlan Ekle</h2>
+                    <form id="propertyForm" class="property-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="title">Başlık</label>
+                                <input type="text" id="title" name="title" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="description">Açıklama</label>
+                            <textarea id="description" name="description" rows="4" required></textarea>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="price">Fiyat (TL)</label>
+                                <input type="number" id="price" name="price" required min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="rooms">Oda Sayısı</label>
+                                <input type="number" id="rooms" name="rooms" required min="1">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bathrooms">Banyo Sayısı</label>
+                                <input type="number" id="bathrooms" name="bathrooms" required min="1">
+                            </div>
+                            <div class="form-group">
+                                <label for="squareMeters">Metrekare</label>
+                                <input type="number" id="squareMeters" name="squareMeters" required min="1">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="images">Resimler</label>
+                            <div class="file-upload">
+                                <input type="file" id="images" name="images" multiple accept="image/*">
+                                <div class="upload-text">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Resimleri buraya sürükleyin veya seçin</p>
+                                </div>
+                            </div>
+                            <div id="imagePreview" class="image-preview"></div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            İlan Ekle
+                        </button>
+                    </form>
+                </section>
+
+                <!-- Properties Management -->
+                <section class="admin-section">
+                    <h2>Mevcut İlanlar</h2>
+                    <div id="adminPropertiesList" class="admin-properties-list">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>İlanlar yükleniyor...</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Edit Property Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close-edit">&times;</span>
+            <div class="edit-form-container">
+                <h3>İlan Düzenle</h3>
+                <form id="editForm">
+                    <input type="hidden" id="editPropertyId" name="id">
+                    <div class="form-group">
+                        <label for="editTitle">Başlık</label>
+                        <input type="text" id="editTitle" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editDescription">Açıklama</label>
+                        <textarea id="editDescription" name="description" rows="4" required></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editPrice">Fiyat (TL)</label>
+                            <input type="number" id="editPrice" name="price" required min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="editRooms">Oda Sayısı</label>
+                            <input type="number" id="editRooms" name="rooms" required min="1">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editBathrooms">Banyo Sayısı</label>
+                            <input type="number" id="editBathrooms" name="bathrooms" required min="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="editSquareMeters">Metrekare</label>
+                            <input type="number" id="editSquareMeters" name="squareMeters" required min="1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="editIsActive" name="isActive">
+                            Aktif
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        Kaydet
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        // Authentication check
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('adminToken');
+            if (!token) {
+                window.location.href = '/login';
+                return;
+            }
+            
+            // Logout functionality
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                localStorage.removeItem('adminToken');
+                window.location.href = '/login';
+            });
+        });
+    </script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

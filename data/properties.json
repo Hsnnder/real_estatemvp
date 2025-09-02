@@ -1,0 +1,46 @@
+{
+  "properties": [
+    {
+      "id": "1",
+      "title": "Modern Lüks Daire - Beylikdüzü",
+      "description": "Deniz manzaralı, yeni yapım, lüks daire. Güvenlikli site içerisinde, yüzme havuzu ve fitness center mevcut.",
+      "price": 850000,
+      "rooms": 3,
+      "bathrooms": 2,
+      "squareMeters": 120,
+      "images": [
+        "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg"
+      ],
+      "createdAt": "2025-09-02T17:14:14.893Z",
+      "isActive": true
+    },
+    {
+      "id": "2",
+      "title": "Satılık Villa - Büyükçekmece",
+      "description": "Müstakil villa, bahçeli, kapalı garajlı. Sakin bir mahallede, doğa ile iç içe.",
+      "price": 1200000,
+      "rooms": 4,
+      "bathrooms": 3,
+      "squareMeters": 280,
+      "images": [
+        "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg"
+      ],
+      "createdAt": "2025-09-02T17:14:14.893Z",
+      "isActive": true
+    },
+    {
+      "id": "75ab0387-9bec-4a2c-9257-a311a0904bb0",
+      "title": "SARIÇAM",
+      "description": "123Ç-SARRIÇAM",
+      "price": 14000,
+      "rooms": 5,
+      "bathrooms": 1,
+      "squareMeters": 250,
+      "images": [
+        "/uploads/properties/bcd75ffb-8e52-48b9-9383-81771d0079c6.png"
+      ],
+      "createdAt": "2025-09-02T17:43:48.915Z",
+      "isActive": true
+    }
+  ]
+}
