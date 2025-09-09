@@ -83,3 +83,5 @@ jspm_packages/
 .Trashes
 ehthumbs.db
 Thumbs.db
+emlak-deploy.json
+secrets/*.json
