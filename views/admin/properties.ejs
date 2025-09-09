@@ -98,8 +98,8 @@
             <% properties.forEach(function(p){ %>
               <tr class="border-b bg-white hover:bg-gray-50">
                 <td class="px-6 py-4">
-                  <% if (p.photoIds) { const first = p.photoIds.split(',')[0].trim(); %>
-                    <img src="/image/<%= first %>" class="thumb" alt="<%= p.ilanBaslik %>" loading="lazy" decoding="async"/>
+                    <% if (p.photoIds) { const first = p.photoIds.split(',')[0].trim(); %>
+                    <img src="/img/<%= first %>" class="thumb" alt="<%= p.ilanBaslik %>" loading="lazy" decoding="async"/>
                   <% } else { %>
                     <div class="thumb bg-gray-100 flex items-center justify-center text-gray-400">
                       <span class="material-symbols-outlined">image</span>

@@ -60,7 +60,7 @@
 <div class="overflow-hidden rounded-lg shadow-lg">
   <div class="relative group">
     <div id="sliderTrack" class="flex h-96 w-full transition-transform duration-500 ease-in-out">
-      <% const _photos = (property && property.photos && property.photos.length) ? property.photos : ["https://via.placeholder.com/1200x600?text=Emlak+Gorseli"]; %>
+      <% const _photos = (property && property.photos && property.photos.length) ? property.photos : ["data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='600'%3E%3Crect fill='%23e5e7eb' width='100%25' height='100%25'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='28' fill='%239ca3af'%3EG%C3%B6rsel Yok%3C/text%3E%3C/svg%3E"]; %>
       <% _photos.forEach(function(url){ %>
         <div class="w-full flex-shrink-0 bg-cover bg-center" style='background-image: url("<%= url %>");'></div>
       <% }) %>

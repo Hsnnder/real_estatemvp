@@ -71,7 +71,7 @@ router.get('/propertyinfo/:id', async (req, res) => {
 
     if (property.photoIds) {
       const ids = property.photoIds.split(',').map(id => id.trim()).filter(Boolean);
-      property.photos = ids.map(id => `/image/${id}`);
+      property.photos = ids.map(id => `/img/${id}`);
     } else {
       property.photos = [];
     }
@@ -169,32 +169,4 @@ router.post('/contact', async (req, res) => {
 
 module.exports = router;
 
-// Image proxy route to serve Google Drive images from our domain
-// This helps avoid referrer/CORS/hotlinking quirks with Drive embeds.
-router.get('/image/:id', async (req, res) => {
-  try {
-    const fileId = req.params.id;
-    if (!fileId) return res.status(400).send('Missing file id');
-
-    // Fetch metadata for correct Content-Type
-    const meta = await googleAPI.drive.files.get({
-      fileId,
-      fields: 'id, name, mimeType, size',
-      supportsAllDrives: true
-    });
-    const mimeType = (meta && meta.data && meta.data.mimeType) || 'image/jpeg';
-    res.setHeader('Content-Type', mimeType);
-    res.setHeader('Cache-Control', 'public, max-age=86400');
-
-    // Stream file content
-    const resp = await googleAPI.drive.files.get({ fileId, alt: 'media', supportsAllDrives: true }, { responseType: 'stream' });
-    resp.data.on('error', err => {
-      console.error('Drive stream error:', err);
-      if (!res.headersSent) res.status(500).end('Image stream failed');
-    });
-    resp.data.pipe(res);
-  } catch (e) {
-    console.error('Image proxy error:', e && e.message);
-    if (!res.headersSent) res.status(500).send('Failed to fetch image');
-  }
-});
+// Legacy /image/* route is removed; use /img/* implemented with service account in routes/images.js

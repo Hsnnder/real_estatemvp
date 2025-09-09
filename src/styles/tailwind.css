@@ -31,3 +31,12 @@
 /* Admin palette */
 :root { --primary-700: #19b3b3; --primary-800: #148f8f; }
 
+/* Mobile overflow fix for public pages */
+.page-public { overflow-x: hidden; touch-action: pan-y; }
+@media (max-width: 640px) {
+  .page-public header,
+  .page-public main,
+  .page-public footer,
+  .page-public .layout-container,
+  .page-public .layout-content-container { overflow-x: hidden; }
+}

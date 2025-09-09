@@ -10,6 +10,7 @@
   const cors = require('cors');
   const path = require('path');
   const expressLayouts = require('express-ejs-layouts');
+  const { getDriveSa } = require('./utils/driveSa');
   require('dotenv').config();
   
   const app = express();
@@ -51,15 +52,19 @@
   app.set('layout', 'layout');
   app.set('layout extractScripts', true);
   app.set('layout extractStyles', true);
+  // Initialize Drive SA at startup (logs path)
+  getDriveSa();
   
   // Routes
   const publicRoutes = require('./routes/public');
   const adminRoutes = require('./routes/admin');
   const apiRoutes = require('./routes/api');
+  const imageRoutes = require('./routes/images');
   
   app.use('/', publicRoutes);
   app.use('/admin', adminRoutes);
   app.use('/api', apiRoutes);
+  app.use('/img', imageRoutes);
 
   
   
