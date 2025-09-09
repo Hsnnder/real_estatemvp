@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Work+Sans%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<title><%= title || 'Admin Paneli' %></title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<style type="text/tailwindcss"> :root { --primary-color: #19b2b3; } </style>
+</head>
+<body class="bg-gray-50 text-gray-900" style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
+<div class="relative flex min-h-screen flex-col overflow-x-hidden">
+  <div class="flex h-full grow">
+    <!-- Sidebar -->
+    <aside class="w-64 flex-col bg-white p-6 shadow-md hidden lg:flex">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-10 h-10 bg-[var(--primary-color)] rounded-full"></div>
+        <h1 class="text-xl font-bold">Emlak Yönetim</h1>
+      </div>
+      <nav class="flex flex-col gap-2">
+        <a class="flex items-center gap-3 rounded-md px-3 py-2 bg-[var(--primary-color)]/10 text-[var(--primary-color)]" href="/admin">
+          <span class="material-symbols-outlined">dashboard</span>
+          <span class="font-medium">Dashboard</span>
+        </a>
+        <a class="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100" href="/admin/properties">
+          <span class="material-symbols-outlined">apartment</span>
+          <span class="font-medium">İlanlar</span>
+        </a>
+        <a class="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100" href="/admin/property/add">
+          <span class="material-symbols-outlined">add</span>
+          <span class="font-medium">Yeni İlan</span>
+        </a>
+        <a class="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100" href="/" target="_blank">
+          <span class="material-symbols-outlined">public</span>
+          <span class="font-medium">Siteyi Görüntüle</span>
+        </a>
+      </nav>
+      <div class="mt-auto flex items-center gap-3 p-3 border-t border-gray-200">
+        <img alt="Admin Avatar" class="rounded-full w-10 h-10 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAG41Wx0reSJdswoUeviTruuBc8UFn0LIoyjoKeq_EAU9Fbscy9i15depXeca9Uo0_UVZPCojoFuJb8yl1uzcLkfrrBFqHBkroCpUWnWHkpR1Do9QEkQv0mV8Cyonsph1Kd7hw89MiZT8gSNvsrHy1IAp9JBOyD8ne1ciLIxPq5jv7iJ0wbEO07tLSjpkdU-8NoNOIqlJoylSH4XLCYjxPJWoVUEq9UktbVPEGj8OGpwk3rQj3b84fDcURx9rFGwu4a_1ZTsr6KCoZF"/>
+        <div>
+          <p class="font-semibold">Admin</p>
+          <a class="text-sm text-gray-500 hover:text-[var(--primary-color)]" href="/admin/logout">Çıkış Yap</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="flex-1 p-6 md:p-8">
+      <div class="mb-6">
+        <h2 class="text-3xl font-bold mb-4">Dashboard</h2>
+
+        <% if (!driveAuthorized) { %>
+          <div class="mb-6 rounded-md border border-yellow-200 bg-yellow-50 px-4 py-3 text-sm text-yellow-800 flex items-start gap-3">
+            <span class="material-symbols-outlined">warning</span>
+            <div>
+              Google Drive yetkilendirmesi gerekli. Lütfen
+              <a href="/admin/google/auth" class="underline font-medium">buraya tıklayarak</a>
+              yetki verin.
+            </div>
+          </div>
+        <% } %>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 flex items-center gap-4">
+            <div class="bg-blue-100 p-3 rounded-full">
+              <span class="material-symbols-outlined text-blue-600">assessment</span>
+            </div>
+            <div>
+              <p class="text-gray-600 text-sm">Toplam İlan</p>
+              <p class="text-2xl font-bold"><%= stats.totalProperties %></p>
+            </div>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 flex items-center gap-4">
+            <div class="bg-green-100 p-3 rounded-full">
+              <span class="material-symbols-outlined text-green-600">check_circle</span>
+            </div>
+            <div>
+              <p class="text-gray-600 text-sm">Aktif İlan</p>
+              <p class="text-2xl font-bold"><%= stats.activeProperties %></p>
+            </div>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 flex items-center gap-4">
+            <div class="bg-red-100 p-3 rounded-full">
+              <span class="material-symbols-outlined text-red-600">sell</span>
+            </div>
+            <div>
+              <p class="text-gray-600 text-sm">Satılan İlan</p>
+              <p class="text-2xl font-bold"><%= stats.soldProperties %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions + Search -->
+      <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
+        <h2 class="text-2xl font-bold">İlan Yönetimi</h2>
+        <div class="flex items-center gap-4">
+          <div class="relative w-64">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+            <input class="form-input w-full rounded-md border-gray-300 pl-10 focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" placeholder="İlanlarda ara..." type="text"/>
+          </div>
+          <a href="/admin/property/add" class="flex items-center justify-center gap-2 rounded-md bg-[var(--primary-color)] px-4 py-2 text-white shadow-sm hover:opacity-90">
+            <span class="material-symbols-outlined">add</span>
+            <span>Yeni İlan</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Recent properties table -->
+      <div class="overflow-x-auto rounded-lg border border-gray-200 bg-white shadow-sm">
+        <% if (recentProperties && recentProperties.length > 0) { %>
+          <table class="w-full text-left">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="p-4 text-sm font-semibold text-gray-600">İlan ID</th>
+                <th class="p-4 text-sm font-semibold text-gray-600">Başlık</th>
+                <th class="p-4 text-sm font-semibold text-gray-600">Fiyat</th>
+                <th class="p-4 text-sm font-semibold text-gray-600">Tip</th>
+                <th class="p-4 text-sm font-semibold text-gray-600">Durum</th>
+                <th class="p-4 text-sm font-semibold text-gray-600">İşlemler</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              <% recentProperties.forEach(function(p){ %>
+                <tr>
+                  <td class="p-4 font-medium text-gray-800">#<%= p.ilanId %></td>
+                  <td class="p-4 text-gray-700"><%= p.ilanBaslik %></td>
+                  <td class="p-4 text-gray-700">₺<%= parseInt(p.price || 0).toLocaleString('tr-TR') %></td>
+                  <td class="p-4 text-gray-700"><%= p.propertyType || '-' %></td>
+                  <td class="p-4">
+                    <% const st = (p.status || 'active'); %>
+                    <% if (st === 'active') { %>
+                      <span class="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800">Aktif</span>
+                    <% } else if (st === 'sold') { %>
+                      <span class="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-800">Satıldı</span>
+                    <% } else { %>
+                      <span class="inline-flex items-center rounded-full bg-yellow-100 px-3 py-1 text-sm font-medium text-yellow-800">Beklemede</span>
+                    <% } %>
+                  </td>
+                  <td class="p-4">
+                    <div class="flex items-center gap-3">
+                      <a href="/propertyinfo/<%= p.ilanId %>" target="_blank" class="text-sm font-medium text-[var(--primary-color)] hover:opacity-80 flex items-center gap-1">
+                        <span class="material-symbols-outlined text-base">visibility</span>
+                        Görüntüle
+                      </a>
+                      <a href="/admin/properties" class="text-sm font-medium text-[var(--primary-color)] hover:opacity-80 flex items-center gap-1">
+                        <span class="material-symbols-outlined text-base">edit</span>
+                        Düzenle
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        <% } else { %>
+          <div class="p-6 text-gray-500">Henüz ilan bulunmamaktadır.</div>
+        <% } %>
+      </div>
+    </main>
+  </div>
+</div>
+</body></html>

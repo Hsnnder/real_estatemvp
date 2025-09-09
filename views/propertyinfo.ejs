@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="tr"><head>
+<meta charset="utf-8"/>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Work+Sans%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<title><%= title || 'Emlak Detayları' %> - UrbanNest</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+      :root {
+        --primary-color: #19b3b3;
+      }
+      .form-input {
+        @apply block w-full rounded-md border-gray-300 shadow-sm focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)];
+      }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800" style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
+<div class="relative flex min-h-screen flex-col overflow-x-hidden">
+<header class="sticky top-0 z-10 bg-white shadow-md">
+<div class="container mx-auto flex items-center justify-between px-6 py-4">
+<div class="flex items-center gap-8">
+<a class="flex items-center gap-2 text-xl font-bold text-gray-900" href="/">
+<svg class="h-8 w-8 text-[var(--primary-color)]" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_6_319)">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z" fill="currentColor"></path>
+</g>
+<defs>
+<clipPath id="clip0_6_319"><rect fill="white" height="48" width="48"></rect></clipPath>
+</defs>
+</svg>
+<span>UrbanNest</span>
+</a>
+<nav class="hidden items-center gap-6 md:flex">
+<a class="text-sm font-medium text-gray-600 hover:text-gray-900" href="/">Anasayfa</a>
+<a class="text-sm font-medium text-gray-600 hover:text-gray-900" href="/properties">İlanlar</a>
+<a class="text-sm font-medium text-gray-600 hover:text-gray-900" href="/contact">İletişim</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3">
+<svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" fill-rule="evenodd"></path>
+</svg>
+</span>
+<input class="w-full rounded-md border-gray-300 bg-gray-100 py-2 pl-10 pr-4 text-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Ara" type="text"/>
+</div>
+<a href="/admin/login" class="rounded-md bg-gray-100 px-4 py-2 text-sm font-semibold text-gray-800 hover:bg-gray-200">Giriş Yap</a>
+</div>
+</div>
+</header>
+<main class="container mx-auto flex-1 px-6 py-12">
+<div class="mx-auto max-w-6xl">
+<div class="mb-8">
+<nav aria-label="Breadcrumb" class="flex text-sm">
+<ol class="inline-flex items-center space-x-1 md:space-x-3">
+<li class="inline-flex items-center">
+<a class="inline-flex items-center text-gray-500 hover:text-gray-900" href="/properties"> Emlaklar </a>
+</li>
+<li>
+<div class="flex items-center">
+<svg class="h-6 w-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" fill-rule="evenodd"></path>
+</svg>
+<span class="ml-1 font-medium text-gray-800 md:ml-2"><%= property && property.ilanBaslik %></span>
+</div>
+</li>
+</ol>
+</nav>
+</div>
+<div class="grid grid-cols-1 gap-12 lg:grid-cols-3">
+<div class="lg:col-span-2">
+<div class="overflow-hidden rounded-lg shadow-lg">
+  <div class="relative group">
+    <div id="sliderTrack" class="flex h-96 w-full transition-transform duration-500 ease-in-out">
+      <% const _photos = (property && property.photos && property.photos.length) ? property.photos : ["https://via.placeholder.com/1200x600?text=Emlak+Gorseli"]; %>
+      <% _photos.forEach(function(url){ %>
+        <div class="w-full flex-shrink-0 bg-cover bg-center" style='background-image: url("<%= url %>");'></div>
+      <% }) %>
+    </div>
+    <div class="pointer-events-none absolute inset-0 bg-black/10"></div>
+    <!-- Prev/Next arrows -->
+    <button id="prevPhoto" type="button" aria-label="Önceki" class="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-black/40 text-white items-center justify-center hover:bg-black/60 focus:outline-none">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-6 w-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+      </svg>
+    </button>
+    <button id="nextPhoto" type="button" aria-label="Sonraki" class="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-black/40 text-white items-center justify-center hover:bg-black/60 focus:outline-none">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-6 w-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+      </svg>
+    </button>
+    <div id="sliderDots" class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
+      <% _photos.forEach(function(url, i){ %>
+        <button type="button" class="h-2.5 w-2.5 rounded-full bg-white/60 hover:bg-white" data-index="<%= i %>"></button>
+      <% }) %>
+    </div>
+  </div>
+</div>
+<div class="mt-8">
+<h1 class="text-3xl font-bold text-gray-900"><%= property && property.ilanBaslik %></h1>
+<p class="mt-2 text-lg text-gray-600">
+  <%= property && property.ilanOda %> oda ·
+  <%= property && property.ilanBanyo %> banyo ·
+  <%= property && property.ilanBoyut %> m²
+  <% if (property && property.propertyType) { %> · <%= property.propertyType %><% } %>
+</p>
+</div>
+<div class="mt-8">
+<h2 class="text-2xl font-bold text-gray-900">Genel Bakış</h2>
+<p class="mt-4 text-gray-600"><%= (property && property.ilanAciklama) ? property.ilanAciklama : 'Bu ilan için açıklama bulunmuyor.' %></p>
+</div>
+<div class="mt-8">
+<h2 class="text-2xl font-bold text-gray-900">Fotoğraflar</h2>
+<div id="thumbGrid" class="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
+  <% if (property && property.photos && property.photos.length) { %>
+    <% property.photos.forEach(function(url, idx){ %>
+      <button type="button" class="h-40 sm:h-48 w-full rounded-lg bg-cover bg-center ring-0 focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]" style='background-image: url("<%= url %>");' data-index="<%= idx %>"></button>
+    <% }); %>
+  <% } else { %>
+    <div class="h-48 w-full rounded-lg bg-gray-100 flex items-center justify-center text-gray-500">Fotoğraf bulunmuyor</div>
+  <% } %>
+  </div>
+</div>
+</div>
+<div class="lg:col-span-1">
+<div class="sticky top-28 rounded-lg bg-white p-6 shadow-lg">
+<h2 class="text-2xl font-bold text-gray-900">Emlakçı ile İletişime Geçin</h2>
+<form class="mt-6 space-y-4" action="/contact" method="POST">
+<input type="hidden" name="subject" value="İlan İletişim: <%= property && property.ilanBaslik %> (#<%= property && property.ilanId %>)">
+<div>
+<label class="sr-only" for="name">Adınız</label>
+<input class="form-input bg-gray-100" id="name" name="name" placeholder="Adınız" type="text" required/>
+</div>
+<div>
+<label class="sr-only" for="email">E-postanız</label>
+<input class="form-input bg-gray-100" id="email" name="email" placeholder="E-postanız" type="email" required/>
+</div>
+<div>
+<label class="sr-only" for="phone">Telefonunuz</label>
+<input class="form-input bg-gray-100" id="phone" name="phone" placeholder="Telefonunuz" type="tel"/>
+</div>
+<div>
+<label class="sr-only" for="message">Mesajınız</label>
+<textarea class="form-input bg-gray-100" id="message" name="message" placeholder="Mesajınız" rows="4" required></textarea>
+</div>
+<button class="w-full rounded-md bg-[var(--primary-color)] px-4 py-3 text-sm font-bold text-white shadow-sm hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] focus:ring-offset-2" type="submit">
+                    Mesaj Gönder
+                  </button>
+</form>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>
+  (function(){
+    try {
+      const photos = <%- JSON.stringify((property && property.photos) ? property.photos : []) %>;
+      const track = document.getElementById('sliderTrack');
+      const prevBtn = document.getElementById('prevPhoto');
+      const nextBtn = document.getElementById('nextPhoto');
+      const grid = document.getElementById('thumbGrid');
+      const dotsWrap = document.getElementById('sliderDots');
+      let idx = 0;
+
+      function update() {
+        if (!track || !photos.length) return;
+        track.style.transform = `translateX(-${idx * 100}%)`;
+        if (dotsWrap) {
+          const dots = dotsWrap.querySelectorAll('button[data-index]');
+          dots.forEach((d,i)=>{
+            if (i === idx) { d.classList.add('bg-white'); d.classList.remove('bg-white/60'); }
+            else { d.classList.remove('bg-white'); d.classList.add('bg-white/60'); }
+          });
+        }
+      }
+
+      if (photos.length > 1) {
+        if (prevBtn) prevBtn.classList.remove('hidden');
+        if (nextBtn) nextBtn.classList.remove('hidden');
+      }
+
+      if (prevBtn) prevBtn.addEventListener('click', function(){
+        idx = (idx - 1 + photos.length) % photos.length;
+        update();
+      });
+      if (nextBtn) nextBtn.addEventListener('click', function(){
+        idx = (idx + 1) % photos.length;
+        update();
+      });
+
+      // Keyboard navigation
+      document.addEventListener('keydown', function(e){
+        if (!photos.length) return;
+        if (e.key === 'ArrowLeft') { idx = (idx - 1 + photos.length) % photos.length; update(); }
+        if (e.key === 'ArrowRight') { idx = (idx + 1) % photos.length; update(); }
+      });
+
+      // Thumbnail click navigation
+      if (grid) {
+        grid.addEventListener('click', function(e){
+          const t = e.target.closest('button[data-index]');
+          if (!t) return;
+          const i = parseInt(t.getAttribute('data-index'), 10);
+          if (!Number.isNaN(i)) { idx = i; update(); }
+        });
+      }
+
+      // Dots click navigation
+      if (dotsWrap) {
+        dotsWrap.addEventListener('click', function(e){
+          const t = e.target.closest('button[data-index]');
+          if (!t) return;
+          const i = parseInt(t.getAttribute('data-index'), 10);
+          if (!Number.isNaN(i)) { idx = i; update(); }
+        });
+      }
+
+      // Touch swipe support
+      let startX = null;
+      if (track) {
+        track.addEventListener('touchstart', (e)=>{ startX = e.touches[0].clientX; }, { passive: true });
+        track.addEventListener('touchend', (e)=>{
+          if (startX == null) return;
+          const dx = e.changedTouches[0].clientX - startX;
+          if (Math.abs(dx) > 40) {
+            if (dx < 0) { idx = (idx + 1) % photos.length; }
+            else { idx = (idx - 1 + photos.length) % photos.length; }
+            update();
+          }
+          startX = null;
+        }, { passive: true });
+      }
+
+      // Initialize
+      update();
+    } catch (_) {}
+  })();
+</script>
+</body></html>

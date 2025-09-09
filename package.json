@@ -1,0 +1,30 @@
+{
+    "name": "real-estate-website",
+    "version": "1.0.0",
+    "description": "Personal Real Estate Website with Admin Panel",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "dev": "nodemon server.js",
+        "build": "echo 'Build completed - static files ready'",
+        "build:prod": "NODE_ENV=production npm start"
+    },
+    "dependencies": {
+        "body-parser": "^1.20.2",
+        "cookie-parser": "^1.4.6",
+        "cors": "^2.8.5",
+        "dotenv": "^16.3.1",
+        "ejs": "^3.1.9",
+        "express": "^4.18.2",
+        "express-ejs-layouts": "^2.5.1",
+        "express-session": "^1.17.3",
+        "googleapis": "^120.0.0",
+        "helmet": "^7.0.0",
+        "mongodb": "^6.19.0",
+        "multer": "^1.4.4",
+        "nodemailer": "^6.10.1"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.1"
+    }
+}

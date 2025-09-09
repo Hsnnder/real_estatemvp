@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Work+Sans%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<title><%= title %> - Admin Paneli</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+  :root {
+    --primary-700: #19b3b3;
+    --primary-800: #148f8f;
+  }
+  .active-nav-link { color: var(--primary-700); font-weight: 700; }
+  .thumb { width: 80px; height: 60px; object-fit: cover; border-radius: 6px; }
+  .truncate-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+</style>
+</head>
+<body class="bg-gray-50 text-gray-800" style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
+<div class="relative flex min-h-screen flex-row">
+  <!-- Sidebar -->
+  <aside class="flex flex-col items-start gap-12 whitespace-nowrap border-r border-gray-200 bg-white p-6">
+    <div class="flex items-center gap-3 text-gray-900">
+      <div class="size-8 text-[var(--primary-700)]">
+        <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.99902L2 9.99902V21.999H9V15.999H15V21.999H22V9.99902L12 1.99902ZM11 17.999H13V19.999H11V17.999Z"></path></svg>
+      </div>
+      <h2 class="text-xl font-bold">Emlak Yönetim</h2>
+    </div>
+    <nav class="flex flex-col gap-6 text-base font-medium text-gray-500">
+      <a class="flex items-center gap-3 hover:text-[var(--primary-700)]" href="/admin">
+        <span class="material-symbols-outlined">dashboard</span>
+        Dashboard
+      </a>
+      <a class="flex items-center gap-3 hover:text-[var(--primary-700)] active-nav-link" href="/admin/properties">
+        <span class="material-symbols-outlined">apartment</span>
+        İlanlar
+      </a>
+      <a class="flex items-center gap-3 hover:text-[var(--primary-700)]" href="/admin/property/add">
+        <span class="material-symbols-outlined">add</span>
+        Yeni İlan
+      </a>
+      <a class="flex items-center gap-3 hover:text-[var(--primary-700)]" href="/" target="_blank">
+        <span class="material-symbols-outlined">public</span>
+        Siteyi Görüntüle
+      </a>
+    </nav>
+    <div class="mt-auto flex items-center gap-4">
+      <div class="size-10 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAcrJy3Riz2_kdaScWSEFW8VTNnB7yHfz81WGs_lQN-2ZubZB2Q1phsY9nogW6QtB_i8Nr6lp4mvvLhw-uB0m13Mq8yUiW9VG0tmtyRozyf5V-X2A01pzT9ssAhHsePcFyOSDk9XnK4cXCpYhUHxaZgybstEiND8qSWLWDq0iHdMN38nk-bwHowgw7E5NCYswfioaBvhuJCdM4UCToofOFAOb-nbnlSIYajVDt6MJmrxLmK-x2Rhz54y3xzBZ_dBTgea9HPZrWATuSM");'></div>
+      <div>
+        <p class="font-semibold text-gray-900">Admin</p>
+        <a class="text-sm text-gray-500 hover:text-[var(--primary-700)]" href="/admin/logout">Çıkış Yap</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="flex-1 p-8">
+    <div class="flex items-center justify-between pb-6">
+      <h1 class="text-4xl font-bold text-gray-900">Tüm İlanları İncele</h1>
+      <a href="/admin/property/add" class="flex items-center gap-2 rounded-md bg-[var(--primary-700)] px-4 py-2 text-white shadow-sm hover:bg-[var(--primary-800)]">
+        <span class="material-symbols-outlined">add</span>
+        Yeni İlan Ekle
+      </a>
+    </div>
+
+    <% if (success) { %>
+      <div class="mb-4 rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">İlan başarıyla eklendi.</div>
+    <% } %>
+    <% if (updated) { %>
+      <div class="mb-4 rounded-md border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-800">İlan güncellendi.</div>
+    <% } %>
+    <% if (error) { %>
+      <div class="mb-4 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">İşlem sırasında hata oluştu.</div>
+    <% } %>
+
+    <div class="overflow-x-auto rounded-lg border border-gray-200 bg-white">
+      <% if (!properties || properties.length === 0) { %>
+        <div class="p-8 text-gray-500">Henüz ilan bulunmuyor. Yeni ilan ekleyin.</div>
+      <% } else { %>
+        <table class="w-full text-left text-sm text-gray-600">
+          <thead class="bg-gray-100 text-xs uppercase text-gray-700">
+            <tr>
+              <th class="px-6 py-3" scope="col">Foto</th>
+              <th class="px-6 py-3" scope="col">Başlık</th>
+              <th class="px-6 py-3" scope="col">Fiyat</th>
+              <th class="px-6 py-3" scope="col">Tip</th>
+              <th class="px-6 py-3" scope="col">Oda/Banyo</th>
+              <th class="px-6 py-3" scope="col">Boyut</th>
+              <th class="px-6 py-3" scope="col">Durum</th>
+              <th class="px-6 py-3" scope="col"><span class="sr-only">İşlemler</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% properties.forEach(function(p){ %>
+              <tr class="border-b bg-white hover:bg-gray-50">
+                <td class="px-6 py-4">
+                  <% if (p.photoIds) { const first = p.photoIds.split(',')[0].trim(); %>
+                    <img src="/image/<%= first %>" class="thumb" alt="<%= p.ilanBaslik %>" loading="lazy" decoding="async"/>
+                  <% } else { %>
+                    <div class="thumb bg-gray-100 flex items-center justify-center text-gray-400">
+                      <span class="material-symbols-outlined">image</span>
+                    </div>
+                  <% } %>
+                </td>
+                <td class="px-6 py-4">
+                  <div class="font-medium text-gray-900"><%= p.ilanBaslik %></div>
+                  <div class="text-gray-500 text-xs truncate-2"><%= (p.ilanAciklama || '') %></div>
+                </td>
+                <td class="px-6 py-4">₺<%= parseInt(p.price || 0).toLocaleString('tr-TR') %></td>
+                <td class="px-6 py-4"><%= p.propertyType || '-' %></td>
+                <td class="px-6 py-4"><%= p.ilanOda %>/<%= p.ilanBanyo %></td>
+                <td class="px-6 py-4"><%= p.ilanBoyut %> m²</td>
+                <td class="px-6 py-4">
+                  <% const st = (p.status || 'active'); %>
+                  <% if (st === 'active') { %>
+                    <span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800"><span class="mr-1.5 h-2 w-2 rounded-full bg-green-500"></span>Aktif</span>
+                  <% } else if (st === 'sold') { %>
+                    <span class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800"><span class="mr-1.5 h-2 w-2 rounded-full bg-gray-500"></span>Satıldı</span>
+                  <% } else { %>
+                    <span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800"><span class="mr-1.5 h-2 w-2 rounded-full bg-red-500"></span>Pasif</span>
+                  <% } %>
+                </td>
+                <td class="px-6 py-4 text-right">
+                  <div class="flex justify-end gap-3">
+                    <a class="font-medium text-[var(--primary-700)] hover:underline" href="/propertyinfo/<%= p.ilanId %>" target="_blank">Görüntüle</a>
+                    <a class="font-medium text-[var(--primary-700)] hover:underline" href="/admin/property/edit/<%= p.ilanId %>">Düzenle</a>
+                  </div>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } %>
+    </div>
+  </main>
+</div>
+</body></html>
