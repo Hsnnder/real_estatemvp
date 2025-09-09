@@ -7,8 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
 <title><%= action === 'add' ? 'Yeni İlan Ekle' : 'İlan Düzenle' %></title>
 <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<style type="text/tailwindcss">
+<link rel="stylesheet" href="/assets/site.css" />
+<style>
   :root { --primary-color: #19b3b3; --text:#0e1b1b; --muted:#509595; }
 </style>
 </head>
@@ -77,23 +77,13 @@
                 <input class="form-input block w-full rounded-lg border-[#d1e6e6] bg-[#f8fbfb] p-4 text-base placeholder:text-[#509595] focus:border-[#19b3b3] focus:ring-[#19b3b3]" id="ilanBoyut" name="ilanBoyut" placeholder="150" type="number" min="1" value="<%= property ? property.ilanBoyut : '' %>" required />
               </div>
             </div>
-            <div>
-              <label class="block text-base font-medium text-[#0e1b1b]" for="latitude">Enlem (Latitude)</label>
-              <div class="mt-1">
-                <input class="form-input block w-full rounded-lg border-[#d1e6e6] bg-[#f8fbfb] p-4 text-base placeholder:text-[#509595] focus:border-[#19b3b3] focus:ring-[#19b3b3]" id="latitude" name="latitude" placeholder="41.01224" type="number" step="any" value="<%= property ? property.latitude : '' %>" />
-              </div>
-            </div>
-            <div>
-              <label class="block text-base font-medium text-[#0e1b1b]" for="longitude">Boylam (Longitude)</label>
-              <div class="mt-1">
-                <input class="form-input block w-full rounded-lg border-[#d1e6e6] bg-[#f8fbfb] p-4 text-base placeholder:text-[#509595] focus:border-[#19b3b3] focus:ring-[#19b3b3]" id="longitude" name="longitude" placeholder="28.97836" type="number" step="any" value="<%= property ? property.longitude : '' %>" />
-              </div>
-            </div>
+            
             <div class="sm:col-span-2">
-              <label class="block text-base font-medium text-[#0e1b1b]" for="address">Adres (opsiyonel)</label>
+              <label class="block text-base font-medium text-[#0e1b1b]" for="address">Adres</label>
               <div class="mt-1">
-                <input class="form-input block w-full rounded-lg border-[#d1e6e6] bg-[#f8fbfb] p-4 text-base placeholder:text-[#509595] focus:border-[#19b3b3] focus:ring-[#19b3b3]" id="address" name="address" placeholder="Mülkün tam adresini girin" type="text" value="<%= property ? (property.address || '') : '' %>" />
+                <input class="form-input block w-full rounded-lg border-[#d1e6e6] bg-[#f8fbfb] p-4 text-base placeholder:text-[#509595] focus:border-[#19b3b3] focus:ring-[#19b3b3]" id="address" name="address" placeholder="Mülkün tam adresini girin" type="text" value="<%= property ? (property.address || '') : '' %>" required />
               </div>
+              <p class="mt-2 text-sm text-[#509595]">Adres girildiğinde koordinatlar (enlem/boylam) otomatik belirlenir.</p>
             </div>
           </div>
 

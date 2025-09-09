@@ -6,41 +6,36 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
 <title><%= title || 'İletişim' %></title>
 <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<style type="text/tailwindcss"> :root { --primary-color: #19b3b3; } </style>
+<link rel="stylesheet" href="/assets/site.css" />
 </head>
 <body class="bg-gray-50" style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
 <div class="relative flex size-full min-h-screen flex-col bg-[#f8fbfb] group/design-root overflow-x-hidden">
   <div class="layout-container flex h-full grow flex-col">
-    <header class="sticky top-0 z-10 bg-white shadow-md">
-      <div class="container mx-auto flex items-center justify-between px-6 py-4">
-        <div class="flex items-center gap-8">
-          <a class="flex items-center gap-2 text-xl font-bold text-gray-900" href="/">
-            <svg class="h-8 w-8 text-[var(--primary-color)]" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+    <header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-[var(--border-color)] bg-[var(--background)]/80 px-10 py-4 backdrop-blur-sm">
+      <div class="flex items-center gap-10">
+        <div class="flex items-center gap-3 text-[var(--text-primary)]">
+          <div class="size-6 text-[var(--primary-color)]">
+            <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
               <g clip-path="url(#clip0_6_319)">
                 <path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z" fill="currentColor"></path>
               </g>
-              <defs><clipPath id="clip0_6_319"><rect fill="white" height="48" width="48"></rect></clipPath></defs>
+              <defs>
+                <clipPath id="clip0_6_319"><rect fill="white" height="48" width="48"></rect></clipPath>
+              </defs>
             </svg>
-            <span>UrbanNest</span>
-          </a>
-          <nav class="hidden items-center gap-6 md:flex">
-            <a class="text-sm font-medium text-gray-600 hover:text-gray-900" href="/">Anasayfa</a>
-            <a class="text-sm font-medium text-gray-600 hover:text-gray-900" href="/properties">İlanlar</a>
-            <a class="text-sm font-medium text-gray-900 border-b-2 border-[var(--primary-color)] pb-1" href="/contact">İletişim</a>
-          </nav>
-        </div>
-        <div class="flex items-center gap-4">
-          <div class="relative hidden lg:block">
-            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-              <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" fill-rule="evenodd"></path>
-              </svg>
-            </span>
-            <input class="w-full rounded-md border-gray-300 bg-gray-100 py-2 pl-10 pr-4 text-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Ara" type="text"/>
           </div>
-          <a href="/admin/login" class="rounded-md bg-gray-100 px-4 py-2 text-sm font-semibold text-gray-800 hover:bg-gray-200">Giriş Yap</a>
+          <h2 class="text-[var(--text-primary)] text-xl font-bold leading-tight tracking-[-0.015em]">UrbanNest</h2>
         </div>
+        <nav class="hidden md:flex items-center gap-8">
+          <a class="text-[var(--text-primary)] text-base font-medium leading-normal hover:text-[var(--primary-color)] transition-colors" href="/">Anasayfa</a>
+          <a class="text-[var(--text-primary)] text-base font-medium leading-normal hover:text-[var(--primary-color)] transition-colors" href="/properties">İlanlar</a>
+          <a class="text-[var(--text-primary)] text-base font-medium leading-normal hover:text-[var(--primary-color)] transition-colors" href="/contact">İletişim</a>
+        </nav>
+      </div>
+      <div class="flex flex-1 justify-end gap-4">
+        <a href="/admin/login" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-md h-10 px-4 bg-transparent text-[var(--text-primary)] text-base font-bold leading-normal tracking-[0.015em] hover:bg-[var(--primary-color-light)] transition-colors">
+          <span class="truncate">Giriş Yap</span>
+        </a>
       </div>
     </header>
 
@@ -154,5 +149,6 @@
     </main>
   </div>
 </div>
+<%- include('partials/footer') %>
 
 </body></html>

@@ -7,16 +7,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
 <title><%= title %> - Admin Paneli</title>
 <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<style type="text/tailwindcss">
-  :root {
-    --primary-700: #19b3b3;
-    --primary-800: #148f8f;
-  }
-  .active-nav-link { color: var(--primary-700); font-weight: 700; }
+<link rel="stylesheet" href="/assets/site.css" />
+<style>
   .thumb { width: 80px; height: 60px; object-fit: cover; border-radius: 6px; }
   .truncate-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-</style>
+  .active-nav-link { color: var(--primary-700); font-weight: 700; }
+  :root { --primary-700: #19b3b3; --primary-800: #148f8f; }
+  </style>
 </head>
 <body class="bg-gray-50 text-gray-800" style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
 <div class="relative flex min-h-screen flex-row">
@@ -74,6 +71,11 @@
     <% if (error) { %>
       <div class="mb-4 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">İşlem sırasında hata oluştu.</div>
     <% } %>
+    <% if (typeof geocode !== 'undefined' && (geocode === 'fail' || geocode === '0')) { %>
+      <div class="mb-4 rounded-md border border-yellow-200 bg-yellow-50 px-4 py-3 text-sm text-yellow-800">
+        Adres jeokodlama başarısız oldu; koordinatlar kaydedilemedi. Harita adres ile gösterilmeye devam edecek.
+      </div>
+    <% } %>
 
     <div class="overflow-x-auto rounded-lg border border-gray-200 bg-white">
       <% if (!properties || properties.length === 0) { %>
@@ -119,13 +121,33 @@
                   <% } else if (st === 'sold') { %>
                     <span class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800"><span class="mr-1.5 h-2 w-2 rounded-full bg-gray-500"></span>Satıldı</span>
                   <% } else { %>
-                    <span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800"><span class="mr-1.5 h-2 w-2 rounded-full bg-red-500"></span>Pasif</span>
+                    <span class="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800"><span class="mr-1.5 h-2 w-2 rounded-full bg-yellow-500"></span>Pasif</span>
                   <% } %>
                 </td>
                 <td class="px-6 py-4 text-right">
                   <div class="flex justify-end gap-3">
                     <a class="font-medium text-[var(--primary-700)] hover:underline" href="/propertyinfo/<%= p.ilanId %>" target="_blank">Görüntüle</a>
-                    <a class="font-medium text-[var(--primary-700)] hover:underline" href="/admin/property/edit/<%= p.ilanId %>">Düzenle</a>
+                    <% if (p.ilanId) { %>
+                      <a class="font-medium text-[var(--primary-700)] hover:underline" href="/admin/property/edit/<%= p.ilanId %>">Düzenle</a>
+                    <% } else { %>
+                      <span class="font-medium text-gray-400 cursor-not-allowed">Düzenle</span>
+                    <% } %>
+                    <% if ((p.status || 'active') !== 'active') { %>
+                      <form action="/admin/property/<%= p.ilanId %>/status" method="POST" class="inline">
+                        <input type="hidden" name="status" value="active" />
+                        <button type="submit" class="font-medium text-green-700 hover:underline"
+                          onclick="return confirm('Bu ilanı aktifleştirmek istediğinize emin misiniz?');">
+                          Aktife Al
+                        </button>
+                      </form>
+                    <% } %>
+                    <form action="/admin/property/<%= p.ilanId %>/status" method="POST" class="inline">
+                      <input type="hidden" name="status" value="passive" />
+                      <button type="submit" class="font-medium text-red-600 hover:underline"
+                        onclick="return confirm('Bu ilanı pasife almak istediğinize emin misiniz?');">
+                        Pasife Al
+                      </button>
+                    </form>
                   </div>
                 </td>
               </tr>

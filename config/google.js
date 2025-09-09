@@ -3,6 +3,16 @@ const path = require('path');
 const fs = require('fs');
 const { Readable } = require('stream');
 
+// Normalize status values from Sheet to a canonical set
+function normalizeStatus(val) {
+  const v = (val || '').toString().trim().toLowerCase();
+  if (['active', 'aktif', 'on', '1', 'true'].includes(v)) return 'active';
+  if (['sold', 'satildi', 'satıldı', 'closed', 'kapandi', 'kapandı'].includes(v)) return 'sold';
+  if (['passive', 'pasif', 'inactive', 'off', '0', 'disabled'].includes(v)) return 'passive';
+  // Default to active for empty/unknown
+  return 'active';
+}
+
 class GoogleAPI {
   constructor() {
     // Service Account auth for Sheets (kept as-is)
@@ -29,6 +39,7 @@ class GoogleAPI {
 
     // Simple in-memory cache for Sheets data
     this._propertiesCache = { data: null, ts: 0 };
+    this._allPropertiesCache = { data: null, ts: 0 };
     // Default to 0 (no cache) so changes reflect instantly unless explicitly enabled via env
     this._cacheTtlMs = parseInt(process.env.PROPERTIES_CACHE_TTL_MS || '0', 10);
   }
@@ -86,7 +97,7 @@ class GoogleAPI {
 
       const response = await this.sheets.spreadsheets.values.get({
         spreadsheetId: process.env.GOOGLE_SHEET_ID,
-        range: 'Sayfa1!A:M'
+        range: 'Sayfa1!A:N'
       });
       
       const rows = response.data.values;
@@ -105,8 +116,9 @@ class GoogleAPI {
         photoIds: row[8] || '',
         latitude: row[9] || '',
         longitude: row[10] || '',
-        status: row[11] || '',
-        createdAt: row[12] || ''
+        status: normalizeStatus(row[11] || ''),
+        createdAt: row[12] || '',
+        address: row[13] || ''
       }));
 
       const active = properties.filter(prop => prop.status === 'active');
@@ -127,7 +139,7 @@ class GoogleAPI {
     try {
       const response = await this.sheets.spreadsheets.values.get({
         spreadsheetId: process.env.GOOGLE_SHEET_ID,
-        range: 'Sayfa1!A:M'
+        range: 'Sayfa1!A:N'
       });
 
       const rows = response.data.values;
@@ -145,13 +157,85 @@ class GoogleAPI {
         photoIds: row[8] || '',
         latitude: row[9] || '',
         longitude: row[10] || '',
-        status: row[11] || '',
-        createdAt: row[12] || ''
+        status: normalizeStatus(row[11] || ''),
+        createdAt: row[12] || '',
+        address: row[13] || ''
       }));
 
       return properties.filter(prop => prop.status === 'active');
     } catch (error) {
       console.error('Error fetching fresh properties:', error);
+      return [];
+    }
+  }
+
+  // Get all properties regardless of status (for admin/stats)
+  async getAllProperties() {
+    try {
+      const now = Date.now();
+      if (this._cacheTtlMs > 0 && this._allPropertiesCache.data && (now - this._allPropertiesCache.ts) < this._cacheTtlMs) {
+        return this._allPropertiesCache.data;
+      }
+      const response = await this.sheets.spreadsheets.values.get({
+        spreadsheetId: process.env.GOOGLE_SHEET_ID,
+        range: 'Sayfa1!A:N'
+      });
+      const rows = response.data.values;
+      if (!rows || rows.length === 0) return [];
+      const properties = rows.slice(1).map(row => ({
+        ilanId: row[0] || '',
+        ilanBaslik: row[1] || '',
+        ilanAciklama: row[2] || '',
+        price: row[3] || '',
+        ilanOda: row[4] || '',
+        ilanBanyo: row[5] || '',
+        ilanBoyut: row[6] || '',
+        propertyType: row[7] || '',
+        photoIds: row[8] || '',
+        latitude: row[9] || '',
+        longitude: row[10] || '',
+        status: normalizeStatus(row[11] || ''),
+        createdAt: row[12] || '',
+        address: row[13] || ''
+      }));
+      if (this._cacheTtlMs > 0) {
+        this._allPropertiesCache = { data: properties, ts: now };
+      }
+      return properties;
+    } catch (error) {
+      console.error('Error fetching all properties:', error);
+      return [];
+    }
+  }
+
+  // Fetch all properties bypassing the cache
+  async getAllPropertiesFresh() {
+    try {
+      const response = await this.sheets.spreadsheets.values.get({
+        spreadsheetId: process.env.GOOGLE_SHEET_ID,
+        range: 'Sayfa1!A:N'
+      });
+      const rows = response.data.values;
+      if (!rows || rows.length === 0) return [];
+      const properties = rows.slice(1).map(row => ({
+        ilanId: row[0] || '',
+        ilanBaslik: row[1] || '',
+        ilanAciklama: row[2] || '',
+        price: row[3] || '',
+        ilanOda: row[4] || '',
+        ilanBanyo: row[5] || '',
+        ilanBoyut: row[6] || '',
+        propertyType: row[7] || '',
+        photoIds: row[8] || '',
+        latitude: row[9] || '',
+        longitude: row[10] || '',
+        status: normalizeStatus(row[11] || ''),
+        createdAt: row[12] || '',
+        address: row[13] || ''
+      }));
+      return properties;
+    } catch (error) {
+      console.error('Error fetching fresh all properties:', error);
       return [];
     }
   }
@@ -172,13 +256,14 @@ class GoogleAPI {
           propertyData.latitude || '',
           propertyData.longitude || '',
           'active',
-          new Date().toISOString()
+          new Date().toISOString(),
+          propertyData.address || ''
         ]
       ];
   
       await this.sheets.spreadsheets.values.append({
         spreadsheetId: process.env.GOOGLE_SHEET_ID,
-        range: 'Sayfa1!A:M',
+        range: 'Sayfa1!A:N',
         valueInputOption: 'USER_ENTERED',
         resource: { values }
       });
@@ -196,7 +281,7 @@ class GoogleAPI {
     try {
       const response = await this.sheets.spreadsheets.values.get({
         spreadsheetId: process.env.GOOGLE_SHEET_ID,
-        range: 'Sayfa1!A:M'
+        range: 'Sayfa1!A:N'
       });
       const rows = response.data.values || [];
       if (rows.length < 2) return false;
@@ -224,13 +309,14 @@ class GoogleAPI {
         updates.latitude ?? existing[9] ?? '',
         updates.longitude ?? existing[10] ?? '',
         updates.status ?? existing[11] ?? 'active',
-        existing[12] || new Date().toISOString()
+        existing[12] || new Date().toISOString(),
+        updates.address ?? existing[13] ?? ''
       ];
 
       const sheetRow = idx + 1; // 1-based row number in the sheet
       await this.sheets.spreadsheets.values.update({
         spreadsheetId: process.env.GOOGLE_SHEET_ID,
-        range: `Sayfa1!A${sheetRow}:M${sheetRow}`,
+        range: `Sayfa1!A${sheetRow}:N${sheetRow}`,
         valueInputOption: 'USER_ENTERED',
         resource: { values: [rowValues] }
       });
@@ -310,6 +396,7 @@ class GoogleAPI {
 
   invalidatePropertiesCache() {
     this._propertiesCache = { data: null, ts: 0 };
+    this._allPropertiesCache = { data: null, ts: 0 };
   }
 }
 

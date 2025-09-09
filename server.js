@@ -11,14 +11,17 @@
   const path = require('path');
   const expressLayouts = require('express-ejs-layouts');
   require('dotenv').config();
-  const { MongoClient, ServerApiVersion } = require('mongodb');
-  const uri = "mongodb+srv://husnuonde7_db_user:<kbdy1268>@cluster0.uoujte6.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
   
   const app = express();
   const PORT = process.env.PORT || 3000;
   
   // Middleware
+  // Helmet defaults can block cross-origin CDN CSS/JS (COEP).
+  // Soften policies to ensure Bootstrap/FontAwesome/Tailwind load reliably.
   app.use(helmet({
+    contentSecurityPolicy: false,
+    crossOriginEmbedderPolicy: false,
+    crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' },
     crossOriginResourcePolicy: { policy: 'cross-origin' }
   }));
   app.use(cors());
@@ -58,27 +61,6 @@
   app.use('/admin', adminRoutes);
   app.use('/api', apiRoutes);
 
-
-  const client = new MongoClient(uri, {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-    }
-  });
-  async function run() {
-    try {
-      // Connect the client to the server	(optional starting in v4.7)
-      await client.connect();
-      // Send a ping to confirm a successful connection
-      await client.db("admin").command({ ping: 1 });
-      console.log("Pinged your deployment. You successfully connected to MongoDB!");
-    } finally {
-      // Ensures that the client will close when you finish/error
-      await client.close();
-    }
-  }
-  run().catch(console.dir);
   
   
   app.listen(PORT, () => {

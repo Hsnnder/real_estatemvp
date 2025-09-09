@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global CSS variables used across views */
+:root {
+  --primary-color: #19b3b3;
+  --primary-color-light: #e8f3f3;
+  --text-primary: #0a1414;
+  --text-secondary: #506f6f;
+  --background: #f8fbfb;
+  --border-color: #dde8e8;
+}
+
+/* Common helpers migrated from inline <style type="text/tailwindcss"> blocks */
+.fade-in { animation: fadeIn 1s ease-in-out; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.active-nav-link { color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 4px; }
+.card-link { display: block; }
+.line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* Form control utility used in propertyinfo and others */
+.form-input { @apply block w-full rounded-md border-gray-300 shadow-sm focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]; }
+.form-select { @apply block w-full rounded-md border-gray-300 shadow-sm focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]; }
+.form-radio { @apply text-[var(--primary-color)] focus:ring-[var(--primary-color)]; }
+
+/* Admin palette */
+:root { --primary-700: #19b3b3; --primary-800: #148f8f; }
+

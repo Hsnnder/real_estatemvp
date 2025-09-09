@@ -6,25 +6,9 @@
 <link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Work+Sans:wght@400;500;600;700&amp;family=Noto+Sans:wght@400;500;700;900" onload="this.rel='stylesheet'" rel="stylesheet"/>
 <title>UrbanNest - Profesyonel Emlak</title>
 <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="/assets/site.css" />
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-<style type="text/tailwindcss">
-    :root {
-      --primary-color: #19b2b3;
-      --primary-color-light: #e8f3f3;
-      --text-primary: #0a1414;
-      --text-secondary: #506f6f;
-      --background: #f8fbfb;
-      --border-color: #dde8e8;
-    }
-    .fade-in {
-      animation: fadeIn 1s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+<!-- Tailwind CSS built locally; custom utilities are in site.css -->
 </head>
 <body class="bg-[var(--background)]" style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
 <div class="relative flex size-full min-h-screen flex-col overflow-x-hidden">
@@ -107,6 +91,14 @@
     <a href="/propertyinfo/<%= p.ilanId %>" class="block group/card fade-in rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 bg-white" style="<%= idx ? 'animation-delay: ' + (idx*100) + 'ms;' : '' %>">
       <div class="relative">
         <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-t-lg" style='background-image: url("<%= (p.photoIds && p.photoIds.split(",")[0]) ? ('/image/' + p.photoIds.split(",")[0].trim()) : 'https://via.placeholder.com/800x450?text=Gorsel+Yok' %>");'></div>
+        <% const st = (p.status || 'active'); %>
+        <% if (st === 'active') { %>
+          <span class="absolute top-2 left-2 rounded-full bg-green-100/95 text-green-800 text-xs font-semibold px-2.5 py-0.5">Aktif</span>
+        <% } else if (st === 'sold') { %>
+          <span class="absolute top-2 left-2 rounded-full bg-gray-100/95 text-gray-800 text-xs font-semibold px-2.5 py-0.5">Satıldı</span>
+        <% } else { %>
+          <span class="absolute top-2 left-2 rounded-full bg-yellow-100/95 text-yellow-800 text-xs font-semibold px-2.5 py-0.5">Pasif</span>
+        <% } %>
         <div class="absolute inset-0 bg-black/20 opacity-0 group-hover/card:opacity-100 transition-opacity"></div>
       </div>
       <div class="p-6">
@@ -143,6 +135,7 @@
 </div>
 </div>
 </main>
+<%- include('partials/footer') %>
 </div>
 </div>
 </body></html>
