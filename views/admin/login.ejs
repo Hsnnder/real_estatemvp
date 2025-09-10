@@ -8,11 +8,9 @@
 <title><%= title || 'Admin Panel Girişi' %></title>
 <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
 <link rel="stylesheet" href="/assets/site.css" />
-<style type="text/tailwindcss">
-      :root { --primary-color: #19b3b3; }
-    </style>
+<link rel="stylesheet" href="/assets/theme.css" />
 </head>
-<body class="bg-slate-50" style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
+<body class="bg-[var(--background)] text-[var(--text-primary)]" style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
 <div class="relative flex size-full min-h-screen flex-col bg-gray-50 group/design-root overflow-x-hidden">
   <div class="flex-1">
     <div class="flex min-h-screen items-center justify-center bg-white px-4 py-12 sm:px-6 lg:px-8">
@@ -25,8 +23,8 @@
               </svg>
             </div>
           </div>
-          <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Admin Panel Girişi</h2>
-          <p class="mt-2 text-center text-sm text-gray-600">Devam etmek için bilgilerinizi giriniz.</p>
+          <h2 class="mt-6 text-center text-3xl font-bold tracking-tight" style="color: var(--accent-color)">Admin Panel Girişi</h2>
+          <p class="mt-2 text-center text-sm text-[var(--text-secondary)]">Devam etmek için bilgilerinizi giriniz.</p>
         </div>
 
         <% if (error) { %>
@@ -41,14 +39,14 @@
               <label class="sr-only" for="username">Kullanıcı Adı</label>
               <div class="relative">
                 <span class="material-symbols-outlined absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">person</span>
-                <input autocomplete="username" class="form-input relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-4 pl-10 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-[var(--primary-color)] focus:outline-none focus:ring-[var(--primary-color)] sm:text-sm" id="username" name="username" placeholder="Kullanıcı Adı" required type="text"/>
+                <input autocomplete="username" class="form-input relative block w-full appearance-none rounded-md border border-[var(--border-color)] bg-[var(--background)] px-3 py-4 pl-10 placeholder:text-[var(--text-secondary)] focus:z-10 focus:border-[var(--primary-color)] focus:outline-none focus:ring-[var(--primary-color)] sm:text-sm" id="username" name="username" placeholder="Kullanıcı Adı" required type="text"/>
               </div>
             </div>
             <div>
               <label class="sr-only" for="password">Şifre</label>
               <div class="relative">
                 <span class="material-symbols-outlined absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">lock</span>
-                <input autocomplete="current-password" class="form-input relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-4 pl-10 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-[var(--primary-color)] focus:outline-none focus:ring-[var(--primary-color)] sm:text-sm" id="password" name="password" placeholder="Şifre" required type="password"/>
+                <input autocomplete="current-password" class="form-input relative block w-full appearance-none rounded-md border border-[var(--border-color)] bg-[var(--background)] px-3 py-4 pl-10 placeholder:text-[var(--text-secondary)] focus:z-10 focus:border-[var(--primary-color)] focus:outline-none focus:ring-[var(--primary-color)] sm:text-sm" id="password" name="password" placeholder="Şifre" required type="password"/>
               </div>
             </div>
           </div>
@@ -56,17 +54,17 @@
           <div class="flex items-center justify-between">
             <div class="flex items-center">
               <input class="h-4 w-4 rounded border-gray-300 text-[var(--primary-color)] focus:ring-[var(--primary-color)]" id="remember-me" name="remember-me" type="checkbox"/>
-              <label class="ml-2 block text-sm text-gray-900" for="remember-me">Beni hatırla</label>
+              <label class="ml-2 block text-sm" for="remember-me">Beni hatırla</label>
             </div>
             <div class="text-sm">
-              <a class="font-medium text-[var(--primary-color)] hover:text-teal-500" href="#">Şifremi unuttum</a>
+              <a class="font-medium text-[var(--primary-color)] hover:opacity-90" href="#">Şifremi unuttum</a>
             </div>
           </div>
 
           <div>
-            <button class="group relative flex w-full justify-center rounded-md border border-transparent bg-[var(--primary-color)] px-4 py-3 text-sm font-semibold text-white hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2" type="submit">
+            <button class="group relative flex w-full justify-center rounded-md border border-transparent bg-[var(--primary-color)] px-4 py-3 text-sm font-semibold text-white hover:bg-[var(--primary-color-light)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] focus:ring-offset-2" type="submit">
               <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                <span aria-hidden="true" class="material-symbols-outlined h-5 w-5 text-teal-200 group-hover:text-teal-100">lock</span>
+                <span aria-hidden="true" class="material-symbols-outlined h-5 w-5 text-white/70 group-hover:text-white/90">lock</span>
               </span>
               Giriş Yap
             </button>
@@ -76,5 +74,4 @@
     </div>
   </div>
 </div>
-
 </body></html>

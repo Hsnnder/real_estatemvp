@@ -1,0 +1,39 @@
+/* Lightweight scroll/reveal animations (keeps 60fps, respects RRM) */
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll,
+  .parallax-on-scroll {
+    transition: none !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+.reveal-on-scroll {
+  --delay: 0ms;
+  --reveal-y: 16px;
+  --scroll-y: 0px;
+  opacity: 0;
+  transform: translateY(var(--reveal-y)) translateZ(0);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition-delay: var(--delay);
+  will-change: transform, opacity;
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(var(--scroll-y)) translateZ(0);
+}
+
+/* Optional subtle hover lift that won’t fight transforms if applied on wrapper */
+.hover-lift:hover {
+  transform: translateY(calc(var(--scroll-y, 0px) - 2px));
+}
+
+/* Generic fade-in utility for sections already using .fade-in in markup */
+.fade-in { opacity: 0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease; }
+.fade-in.is-visible { opacity: 1; transform: translateY(0); }
+
+/* Parallax container helper (if needed later) */
+.parallax-on-scroll { will-change: transform; }
+

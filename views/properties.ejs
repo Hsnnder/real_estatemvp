@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="tr"><head>
 <meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
 <link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Work+Sans%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/>
 <title>Emlak Sitesi - İlanlar</title>
 <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
 <link rel="stylesheet" href="/assets/site.css" />
 </head>
-<body class="page-public bg-gray-50" style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
+<body class="page-public bg-[var(--background)]" style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
 <div class="relative flex size-full min-h-screen flex-col bg-gray-50 group/design-root overflow-x-hidden">
   <div class="layout-container flex h-full grow flex-col">
     <header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-[var(--border-color)] bg-[var(--background)]/80 px-10 py-4 backdrop-blur-sm">
@@ -23,7 +24,7 @@
               </defs>
             </svg>
           </div>
-          <h2 class="text-[var(--text-primary)] text-xl font-bold leading-tight tracking-[-0.015em]">UrbanNest</h2>
+          <h2 class="text-[var(--text-primary)] text-xl font-bold leading-tight tracking-[-0.015em]">Hacı Polat</h2>
         </div>
         <nav class="hidden md:flex items-center gap-8">
           <a class="text-[var(--text-primary)] text-base font-medium leading-normal hover:text-[var(--primary-color)] transition-colors" href="/">Anasayfa</a>
@@ -31,10 +32,17 @@
           <a class="text-[var(--text-primary)] text-base font-medium leading-normal hover:text-[var(--primary-color)] transition-colors" href="/contact">İletişim</a>
         </nav>
       </div>
-      <div class="flex flex-1 justify-end gap-4">
+      <div class="flex flex-1 justify-end items-center gap-2 md:gap-4">
         <a href="/admin/login" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-md h-10 px-4 bg-transparent text-[var(--text-primary)] text-base font-bold leading-normal tracking-[0.015em] hover:bg-[var(--primary-color-light)] transition-colors">
           <span class="truncate">Giriş Yap</span>
         </a>
+        <button type="button" class="hamburger-btn menu-toggle" aria-label="Menüyü aç">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
       </div>
     </header>
 
@@ -55,8 +63,8 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 px-4">
           <% if (properties && properties.length) { %>
             <% properties.forEach(function(p){ %>
-              <a href="/propertyinfo/<%= p.ilanId %>" class="card-link">
-                <div class="flex flex-col gap-3 pb-3 bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-1 transition-transform duration-300">
+              <a href="/propertyinfo/<%= p.ilanId %>" class="card-link reveal-on-scroll">
+                <div class="flex flex-col gap-3 pb-3 listing-card rounded-lg shadow-md overflow-hidden transform hover:-translate-y-1 transition-transform duration-300">
                   <div class="relative w-full bg-center bg-no-repeat aspect-video bg-cover" style='background-image: url("<%= (p.photoIds && p.photoIds.split(",")[0]) ? ('/img/' + p.photoIds.split(",")[0].trim()) : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450'%3E%3Crect fill='%23e5e7eb' width='100%25' height='100%25'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='22' fill='%239ca3af'%3EG%C3%B6rsel Yok%3C/text%3E%3C/svg%3E" %>");'>
                     <% const st = (p.status || 'active'); %>
                     <% if (st === 'active') { %>
@@ -68,7 +76,7 @@
                     <% } %>
                   </div>
                   <div class="p-4">
-                    <h3 class="text-gray-800 text-xl font-semibold leading-normal mb-1"><%= p.ilanBaslik %></h3>
+                    <h3 class="card-title text-xl font-semibold leading-normal mb-1"><%= p.ilanBaslik %></h3>
                     <p class="text-gray-600 text-base leading-normal line-clamp-2"><%= (p.ilanAciklama || '') %></p>
                     <p class="text-[var(--primary-color)] text-lg font-bold mt-2">₺<%= parseInt(p.price || 0).toLocaleString('tr-TR') %></p>
                   </div>
@@ -83,6 +91,7 @@
     </main>
   </div>
 </div>
+<%- include('partials/mobile-menu') %>
 <%- include('partials/footer') %>
 
 </body></html>

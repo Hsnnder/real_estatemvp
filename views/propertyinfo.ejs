@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="tr"><head>
 <meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
 <link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Work+Sans%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/>
 <title><%= title || 'Emlak Detayları' %> - UrbanNest</title>
 <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
 <link rel="stylesheet" href="/assets/site.css" />
+<link rel="stylesheet" href="/assets/theme.css" />
 </head>
-<body class="bg-gray-50 text-gray-800" style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
+<body class="page-public bg-[var(--background)] text-[var(--text-primary)]" style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
 <div class="relative flex min-h-screen flex-col overflow-x-hidden">
 <header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-[var(--border-color)] bg-[var(--background)]/80 px-10 py-4 backdrop-blur-sm">
   <div class="flex items-center gap-10">
@@ -22,7 +24,7 @@
           </defs>
         </svg>
       </div>
-      <h2 class="text-[var(--text-primary)] text-xl font-bold leading-tight tracking-[-0.015em]">UrbanNest</h2>
+      <h2 class="text-[var(--text-primary)] text-xl font-bold leading-tight tracking-[-0.015em]">Hacı Polat</h2>
     </div>
     <nav class="hidden md:flex items-center gap-8">
       <a class="text-[var(--text-primary)] text-base font-medium leading-normal hover:text-[var(--primary-color)] transition-colors" href="/">Anasayfa</a>
@@ -30,10 +32,17 @@
       <a class="text-[var(--text-primary)] text-base font-medium leading-normal hover:text-[var(--primary-color)] transition-colors" href="/contact">İletişim</a>
     </nav>
   </div>
-  <div class="flex flex-1 justify-end gap-4">
+  <div class="flex flex-1 justify-end items-center gap-2 md:gap-4">
     <a href="/admin/login" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-md h-10 px-4 bg-transparent text-[var(--text-primary)] text-base font-bold leading-normal tracking-[0.015em] hover:bg-[var(--primary-color-light)] transition-colors">
       <span class="truncate">Giriş Yap</span>
     </a>
+    <button type="button" class="hamburger-btn menu-toggle" aria-label="Menüyü aç">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
   </div>
 </header>
 <main class="container mx-auto flex-1 px-6 py-12">
@@ -183,6 +192,7 @@
 </div>
 </main>
 </div>
+<%- include('partials/mobile-menu') %>
 <script>
   (function(){
     try {

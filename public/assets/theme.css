@@ -1,0 +1,76 @@
+/* Theme overrides based on requested palette */
+:root {
+  /* Base */
+  --background: #F5F1E8;         /* Ana Arka Plan */
+  --text-primary: #4C4C4C;       /* Metin – Gövde */
+  --text-secondary: #6A6A6A;     /* İkincil metin (türev) */
+
+  /* Brand / Actions */
+  --primary-color: #A17783;      /* Linkler / Butonlar */
+  --primary-color-light: #B58E95;/* Hover / Vurgu */
+  --border-color: #D3CBC0;       /* Kenarlık / Ayırıcı */
+
+  /* Accents */
+  --accent-color: #4A5335;       /* Başlık / Kart vurgusu */
+  --card-bg: #EDE6D6;            /* Kart Arka Plan (ilan kutuları) */
+}
+
+/* Listing card surface + title override */
+.listing-card { background-color: var(--card-bg) !important; }
+.listing-card .card-title { color: var(--accent-color) !important; }
+
+/* Generic page text color if not set by utility */
+body { color: var(--text-primary); }
+
+/* Mobile-friendly defaults */
+html, body { max-width: 100%; overflow-x: hidden; }
+img, video, canvas, iframe { max-width: 100%; height: auto; }
+/* Avoid horizontal overflow from long strings */
+/* Safer text wrapping: avoid breaking every character */
+body { word-break: normal; overflow-wrap: break-word; }
+
+/* Tighten large horizontal paddings on small screens */
+@media (max-width: 480px) {
+  .px-10 { padding-left: 1rem !important; padding-right: 1rem !important; }
+}
+
+/* Hamburger + slide-out menu */
+.hamburger-btn {
+  height: 40px; width: 40px; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 8px; border: 1px solid var(--border-color); background: white; color: var(--text-primary);
+}
+.hamburger-btn:hover { background: var(--primary-color-light); color: white; border-color: transparent; }
+
+.menu-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 60;
+  opacity: 0; pointer-events: none; transition: opacity .25s ease;
+}
+.menu-overlay.is-open { opacity: 1; pointer-events: auto; }
+.menu-panel {
+  position: absolute; right: 0; top: 0; height: 100%; width: 300px; max-width: 90vw; background: #fff;
+  box-shadow: -8px 0 24px rgba(0,0,0,0.1); transform: translateX(100%);
+  transition: transform .3s cubic-bezier(0.22, 1, 0.36, 1); will-change: transform;
+  display: flex; flex-direction: column;
+}
+.menu-panel.is-open { transform: translateX(0); }
+.menu-header { display: flex; align-items: center; justify-content: space-between; padding: 16px; border-bottom: 1px solid var(--border-color); }
+.menu-header h3 { margin: 0; font-size: 1.1rem; color: var(--accent-color); }
+.menu-close { background: transparent; border: 0; color: var(--text-primary); height: 36px; width: 36px; border-radius: 8px; }
+.menu-close:hover { background: rgba(0,0,0,0.05); }
+.menu-links { display: flex; flex-direction: column; padding: 8px; }
+.menu-link { padding: 12px 16px; border-radius: 8px; color: var(--text-primary); text-decoration: none; opacity: 0; transform: translateX(8px); transition: opacity .22s ease, transform .22s ease; }
+.menu-link:hover { background: var(--primary-color-light); color: #fff; }
+
+/* Staggered reveal for menu links when panel opens */
+.menu-panel.is-open .menu-link { opacity: 1; transform: translateX(0); }
+.menu-panel.is-open .menu-link:nth-child(1) { transition-delay: 60ms; }
+.menu-panel.is-open .menu-link:nth-child(2) { transition-delay: 120ms; }
+.menu-panel.is-open .menu-link:nth-child(3) { transition-delay: 180ms; }
+.menu-panel.is-open .menu-link:nth-child(4) { transition-delay: 240ms; }
+.menu-panel.is-open .menu-link:nth-child(5) { transition-delay: 300ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-overlay { transition: none; }
+  .menu-panel { transition: none; }
+  .menu-link { transition: none; opacity: 1; transform: none; }
+}
