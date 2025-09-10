@@ -15,12 +15,32 @@ function normalizeStatus(val) {
 
 class GoogleAPI {
   constructor() {
-    // Service Account auth for Sheets (kept as-is)
+    // Service Account auth for Sheets
+    // Prefer explicit env var, fallback to project-level authjson.json
+    const saPath = process.env.GOOGLE_CREDENTIALS
+      ? path.resolve(process.env.GOOGLE_CREDENTIALS)
+      : '/Users/onderkabadayi/realEstateDeneme/authjson.json';
+    let saCreds = null;
+    try {
+      const raw = fs.readFileSync(saPath, 'utf8');
+      const json = JSON.parse(raw);
+      if (!json || json.type !== 'service_account' || !json.private_key || !json.client_email) {
+        throw new Error('Invalid service account JSON');
+      }
+      saCreds = {
+        client_email: json.client_email,
+        private_key: json.private_key,
+        project_id: json.project_id
+      };
+      console.log(`Using service account for Sheets: ${saPath}`);
+    } catch (e) {
+      console.error('Failed to load service account for Sheets from', saPath, '-', e.message);
+    }
+
     this.auth = new google.auth.GoogleAuth({
-      keyFile: path.join(__dirname, '../credentials.json'),
+      credentials: saCreds || undefined,
       scopes: [
         'https://www.googleapis.com/auth/spreadsheets',
-        // Drive scope intentionally removed from service account due to quota limitations
       ]
     });
     this.sheets = google.sheets({ version: 'v4', auth: this.auth });
