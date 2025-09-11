@@ -1,18 +1,19 @@
 /* Theme overrides based on requested palette */
 :root {
   /* Base */
-  --background: #F5F1E8;         /* Ana Arka Plan */
-  --text-primary: #4C4C4C;       /* Metin – Gövde */
-  --text-secondary: #6A6A6A;     /* İkincil metin (türev) */
+  --background: #F5F7FA;         /* Arka Plan */
+  --text-primary: #2C3E50;       /* Başlık/Yazılar */
+  --text-secondary: #2C3E50;     /* İkincil metin (eşleşik) */
 
   /* Brand / Actions */
-  --primary-color: #A17783;      /* Linkler / Butonlar */
-  --primary-color-light: #B58E95;/* Hover / Vurgu */
-  --border-color: #D3CBC0;       /* Kenarlık / Ayırıcı */
+  --primary-color: #2E86AB;      /* Ana Renk */
+  --primary-color-light: #1A5276;/* Buton Hover / Koyu tını */
+  --border-color: #E0E0E0;       /* Kenarlık / Ayırıcı */
 
   /* Accents */
-  --accent-color: #4A5335;       /* Başlık / Kart vurgusu */
-  --card-bg: #EDE6D6;            /* Kart Arka Plan (ilan kutuları) */
+  --accent-color: #2C3E50;       /* Başlık vurgusu */
+  --card-bg: #FFFFFF;            /* Kart Arka Plan */
+  --secondary-color: #1ABC9C;    /* İkincil Renk (opsiyonel) */
 }
 
 /* Listing card surface + title override */

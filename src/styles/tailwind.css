@@ -5,12 +5,12 @@
 /* Global CSS variables used across views */
 :root {
   /* Updated theme palette */
-  --primary-color: #A17783;      /* Linkler / Butonlar */
-  --primary-color-light: #B58E95;/* Hover / Vurgu */
-  --text-primary: #4C4C4C;       /* Metin – Gövde */
-  --text-secondary: #6A6A6A;     /* İkincil metin */
-  --background: #F5F1E8;         /* Ana Arka Plan */
-  --border-color: #D3CBC0;       /* Kenarlık / Ayırıcı */
+  --primary-color: #2E86AB;      /* Ana Renk */
+  --primary-color-light: #1A5276;/* Hover / Vurgu */
+  --text-primary: #2C3E50;       /* Başlık/Yazılar */
+  --text-secondary: #2C3E50;     /* İkincil metin */
+  --background: #F5F7FA;         /* Arka Plan */
+  --border-color: #E0E0E0;       /* Kenarlık / Ayırıcı */
 }
 
 /* Common helpers migrated from inline <style type="text/tailwindcss"> blocks */
@@ -30,7 +30,7 @@
 .form-radio { @apply text-[var(--primary-color)] focus:ring-[var(--primary-color)]; }
 
 /* Admin palette */
-:root { --primary-700: #A17783; --primary-800: #8C6671; }
+:root { --primary-700: #2E86AB; --primary-800: #1A5276; }
 
 /* Mobile overflow fix for public pages */
 .page-public { overflow-x: hidden; touch-action: pan-y; }
