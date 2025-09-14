@@ -273,7 +273,19 @@ router.post('/property/:id/status', requireAuth, async (req, res) => {
     if (!ok) {
       return res.redirect('/admin/properties?error=update');
     }
-    return res.redirect('/admin/properties?updated=1');
+    // Redirect back to where the action was taken (dashboard or properties)
+    const ref = req.get('referer') || '';
+    if (ref && ref.includes('/admin')) {
+      try {
+        const url = new URL(ref);
+        // Keep within our app paths only
+        if (url.pathname.startsWith('/admin')) {
+          return res.redirect(ref);
+        }
+      } catch (_) { /* ignore parse errors */ }
+    }
+    // Fallback to dashboard
+    return res.redirect('/admin?updated=1');
   } catch (e) {
     console.error('Failed to update status:', e);
     return res.redirect('/admin/properties?error=exception');

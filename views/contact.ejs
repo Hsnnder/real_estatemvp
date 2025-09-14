@@ -9,11 +9,21 @@
 <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
 <link rel="stylesheet" href="/assets/site.css" />
 <link rel="stylesheet" href="/assets/theme.css" />
+<style>
+  :root {
+    --background: var(--background-light);
+    --text-primary: var(--text-dark);
+    --accent-color: var(--text-dark);
+    --primary-color: var(--primary-green);
+    --primary-color-light: var(--primary-green-dark);
+  }
+  .site-nav { background: rgba(255,255,255,0.9); }
+</style>
 </head>
 <body class="page-public bg-[var(--background)]" style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
 <div class="relative flex size-full min-h-screen flex-col bg-[var(--background)] group/design-root overflow-x-hidden">
   <div class="layout-container flex h-full grow flex-col">
-    <header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-[var(--border-color)] bg-[var(--background)]/80 px-10 py-4 backdrop-blur-sm">
+    <header class="site-nav flex items-center justify-between whitespace-nowrap px-10 py-4">
       <div class="flex items-center gap-10">
         <div class="flex items-center gap-3 text-[var(--text-primary)]">
           <div class="size-6 text-[var(--primary-color)]">
@@ -26,12 +36,12 @@
               </defs>
             </svg>
           </div>
-          <h2 class="text-[var(--text-primary)] text-xl font-bold leading-tight tracking-[-0.015em]">Hacı Polat</h2>
+          <h2 class="brand text-xl leading-tight">Hacı Polat</h2>
         </div>
         <nav class="hidden md:flex items-center gap-8">
-          <a class="text-[var(--text-primary)] text-base font-medium leading-normal hover:text-[var(--primary-color)] transition-colors" href="/">Anasayfa</a>
-          <a class="text-[var(--text-primary)] text-base font-medium leading-normal hover:text-[var(--primary-color)] transition-colors" href="/properties">İlanlar</a>
-          <a class="text-[var(--text-primary)] text-base font-medium leading-normal hover:text-[var(--primary-color)] transition-colors" href="/contact">İletişim</a>
+          <a class="nav-link" href="/">Anasayfa</a>
+          <a class="nav-link" href="/properties">İlanlar</a>
+          <a class="nav-link" href="/contact">İletişim</a>
         </nav>
       </div>
       <div class="flex flex-1 justify-end items-center gap-2 md:gap-4">
@@ -65,33 +75,33 @@
 
           <div class="mt-16 grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-8">
             <div class="flex flex-col gap-8">
-              <div class="rounded-lg bg-white p-8 shadow-sm">
+              <div class="rounded-lg bg-[var(--card-bg)] border border-[var(--border-color)] p-8 shadow-sm">
                 <h2 class="text-2xl font-bold" style="color: var(--accent-color)">İletişim Bilgileri</h2>
                 <div class="mt-8 space-y-6">
                   <div class="flex items-start gap-4">
                     <span class="material-symbols-outlined mt-1 text-2xl text-[var(--primary-color)]"> phone </span>
                     <div>
                       <p class="text-sm font-medium text-[var(--text-secondary)]">Telefon</p>
-                      <a class="text-base text-[var(--text-primary)] hover:text-[var(--primary-color)]" href="tel:+902121234567">+90 212 123 45 67</a>
+                      <a class="text-base text-[var(--text-primary)] hover:text-[var(--primary-color)]" href="tel:+905551234567">+90 507 238 67 54</a>
                     </div>
                   </div>
                   <div class="flex items-start gap-4">
                     <span class="material-symbols-outlined mt-1 text-2xl text-[var(--primary-color)]"> mail </span>
                     <div>
                       <p class="text-sm font-medium text-[var(--text-secondary)]">E-posta</p>
-                      <a class="text-base text-[var(--text-primary)] hover:text-[var(--primary-color)]" href="mailto:info@emlak.com">info@emlak.com</a>
+                      <a class="text-base text-[var(--text-primary)] hover:text-[var(--primary-color)]" href="mailto:info@emlakuzmaniniz.com">hacipolat283@gmail.com</a>
                     </div>
                   </div>
                   <div class="flex items-start gap-4">
                     <span class="material-symbols-outlined mt-1 text-2xl text-[var(--primary-color)]"> location_on </span>
                     <div>
                       <p class="text-sm font-medium text-[var(--text-secondary)]">Adres</p>
-                      <p class="text-base text-[var(--text-primary)]">Bağlarca, 34500 Büyükçekmece/İstanbul</p>
+                      <p class="text-base text-[var(--text-primary)]">Aşağı Pazarcı Mahallesi 2.Hanım cad. No:24 Manavgat/Antalya</p>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="rounded-lg bg-white p-8 shadow-sm">
+              <div class="rounded-lg bg-[var(--card-bg)] border border-[var(--border-color)] p-8 shadow-sm">
                 <h2 class="text-2xl font-bold" style="color: var(--accent-color)">Çalışma Saatlerimiz</h2>
                 <div class="mt-8 space-y-6">
                   <div class="flex items-start gap-4">
@@ -112,7 +122,7 @@
               </div>
             </div>
 
-            <div class="rounded-lg bg-white p-8 shadow-sm">
+            <div class="rounded-lg bg-[var(--card-bg)] border border-[var(--border-color)] p-8 shadow-sm">
               <h2 class="text-2xl font-bold" style="color: var(--accent-color)">Bize Ulaşın</h2>
               <form action="/contact" class="mt-8 space-y-6" method="POST">
                 <div>

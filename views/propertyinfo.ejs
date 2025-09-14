@@ -11,7 +11,7 @@
 </head>
 <body class="page-public bg-[var(--background)] text-[var(--text-primary)]" style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
 <div class="relative flex min-h-screen flex-col overflow-x-hidden">
-<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-[var(--border-color)] bg-[var(--background)]/80 px-10 py-4 backdrop-blur-sm">
+<header class="site-nav flex items-center justify-between whitespace-nowrap px-10 py-4">
   <div class="flex items-center gap-10">
     <div class="flex items-center gap-3 text-[var(--text-primary)]">
       <div class="size-6 text-[var(--primary-color)]">
@@ -24,12 +24,12 @@
           </defs>
         </svg>
       </div>
-      <h2 class="text-[var(--text-primary)] text-xl font-bold leading-tight tracking-[-0.015em]">Hacı Polat</h2>
+      <h2 class="brand text-xl leading-tight">Hacı Polat</h2>
     </div>
     <nav class="hidden md:flex items-center gap-8">
-      <a class="text-[var(--text-primary)] text-base font-medium leading-normal hover:text-[var(--primary-color)] transition-colors" href="/">Anasayfa</a>
-      <a class="text-[var(--text-primary)] text-base font-medium leading-normal hover:text-[var(--primary-color)] transition-colors" href="/properties">İlanlar</a>
-      <a class="text-[var(--text-primary)] text-base font-medium leading-normal hover:text-[var(--primary-color)] transition-colors" href="/contact">İletişim</a>
+      <a class="nav-link" href="/">Anasayfa</a>
+      <a class="nav-link" href="/properties">İlanlar</a>
+      <a class="nav-link" href="/contact">İletişim</a>
     </nav>
   </div>
   <div class="flex flex-1 justify-end items-center gap-2 md:gap-4">
@@ -48,6 +48,16 @@
 <main class="container mx-auto flex-1 px-6 py-12">
 <div class="mx-auto max-w-6xl">
 <div class="mb-8">
+<% if (typeof contact !== 'undefined' && contact === 'success') { %>
+  <div class="mb-4 rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+    Mesajınız gönderildi. En kısa sürede dönüş yapılacaktır.
+  </div>
+<% } %>
+<% if (typeof contact_error !== 'undefined' && contact_error) { %>
+  <div class="mb-4 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+    <%= contact_error %>
+  </div>
+<% } %>
 <nav aria-label="Breadcrumb" class="flex text-sm">
 <ol class="inline-flex items-center space-x-1 md:space-x-3">
 <li class="inline-flex items-center">
@@ -131,7 +141,7 @@
 </div>
 </div>
   <div class="lg:col-span-1">
-  <div class="sticky top-28 rounded-lg bg-white p-6 shadow-lg">
+  <div class="sticky top-28 rounded-lg bg-[var(--card-bg)] border border-[var(--border-color)] p-6 shadow-lg">
 <h2 class="text-2xl font-bold text-gray-900">Emlakçı ile İletişime Geçin</h2>
 <form class="mt-6 space-y-4" action="/contact" method="POST">
 <input type="hidden" name="subject" value="İlan İletişim: <%= property && property.ilanBaslik %> (#<%= property && property.ilanId %>)">
@@ -157,7 +167,7 @@
 </form>
   </div>
   <!-- Map card aligned with the contact card width; square layout -->
-  <div class="mt-6 rounded-lg bg-white p-4 shadow-lg">
+  <div class="mt-6 rounded-lg bg-[var(--card-bg)] border border-[var(--border-color)] p-4 shadow-lg">
     <h2 class="text-lg font-bold text-gray-900">Konum</h2>
     <% 
       const hasCoords = property && property.latitude && property.longitude;

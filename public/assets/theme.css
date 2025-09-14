@@ -1,19 +1,25 @@
 /* Theme overrides based on requested palette */
 :root {
-  /* Base */
-  --background: #F5F7FA;         /* Arka Plan */
-  --text-primary: #2C3E50;       /* Başlık/Yazılar */
-  --text-secondary: #2C3E50;     /* İkincil metin (eşleşik) */
+  /* New palette (user-provided) */
+  --primary-green: #008C8C;
+  --primary-green-dark: #006F6F;
+  --primary-green-light: #00AFAF;
+  --background-light: #F9FAFB;
+  --card-background: #FFFFFF;
+  --text-dark: #1F2937;
+  --text-gray: #4B5563;
+  --footer-background: #004D4D;
+  --footer-text: #E5E7EB;
 
-  /* Brand / Actions */
-  --primary-color: #2E86AB;      /* Ana Renk */
-  --primary-color-light: #1A5276;/* Buton Hover / Koyu tını */
-  --border-color: #E0E0E0;       /* Kenarlık / Ayırıcı */
-
-  /* Accents */
-  --accent-color: #2C3E50;       /* Başlık vurgusu */
-  --card-bg: #FFFFFF;            /* Kart Arka Plan */
-  --secondary-color: #1ABC9C;    /* İkincil Renk (opsiyonel) */
+  /* Mapped variables used across the app */
+  --background: var(--background-light);
+  --text-primary: var(--text-dark);
+  --text-secondary: var(--text-gray);
+  --primary-color: var(--primary-green);
+  --primary-color-light: var(--primary-green-dark);
+  --border-color: #E5E7EB;
+  --accent-color: var(--text-dark);
+  --card-bg: var(--card-background);
 }
 
 /* Listing card surface + title override */
@@ -29,6 +35,9 @@ img, video, canvas, iframe { max-width: 100%; height: auto; }
 /* Avoid horizontal overflow from long strings */
 /* Safer text wrapping: avoid breaking every character */
 body { word-break: normal; overflow-wrap: break-word; }
+
+/* Uniform, hafif gri arka plan */
+body { background: var(--background); }
 
 /* Tighten large horizontal paddings on small screens */
 @media (max-width: 480px) {
@@ -75,3 +84,17 @@ body { word-break: normal; overflow-wrap: break-word; }
   .menu-panel { transition: none; }
   .menu-link { transition: none; opacity: 1; transform: none; }
 }
+
+/* Modern sticky navbar styled similar to clean commerce headers */
+.site-nav { position: sticky; top: 0; z-index: 60; background: rgba(255,255,255,0.88); border-bottom: 1px solid var(--border-color); backdrop-filter: blur(8px); transition: background .25s ease, box-shadow .25s ease, padding .2s ease; }
+.site-nav .brand { color: var(--text-primary); font-weight: 700; letter-spacing: -0.015em; }
+.site-nav .nav-link { color: var(--text-primary); position: relative; padding: 12px 0; margin: 0 12px; text-decoration: none; }
+.site-nav .nav-link:hover { color: var(--primary-color); }
+.site-nav .nav-link::after { content: ""; position: absolute; left: 0; bottom: -6px; height: 2px; width: 0; background: var(--primary-color); transition: width .22s ease; }
+.site-nav .nav-link:hover::after, .site-nav .nav-link.active::after { width: 100%; }
+.site-nav.is-scrolled { background: #fff; box-shadow: 0 6px 18px rgba(0,0,0,0.06); }
+
+/* Footer theming */
+footer { background: var(--footer-background); color: var(--footer-text); }
+footer a { color: var(--footer-text); }
+footer a:hover { opacity: 0.9; }

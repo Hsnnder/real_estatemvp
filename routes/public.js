@@ -77,7 +77,13 @@ router.get('/propertyinfo/:id', async (req, res) => {
     }
 
     // Render without layout; this EJS has its own HTML skeleton
-    return res.render('propertyinfo', { title: property.ilanBaslik, property, layout: false });
+    return res.render('propertyinfo', { 
+      title: property.ilanBaslik, 
+      property, 
+      contact: req.query.contact,
+      contact_error: req.query.contact_error,
+      layout: false 
+    });
   } catch (e) {
     console.error('propertyinfo route error:', e);
     return res.status(500).send('Sunucu Hatası');
@@ -152,17 +158,37 @@ router.post('/contact', async (req, res) => {
   try {
     const { name, email, phone, subject, message } = req.body || {};
     if (!name || !email || !subject || !message) {
+      const ref = req.get('referer') || '';
+      if (ref.includes('/propertyinfo/')) {
+        const sep = ref.includes('?') ? '&' : '?';
+        return res.redirect(ref + sep + 'contact_error=Eksik%20bilgi');
+      }
       return res.redirect('/contact?error=Eksik%20bilgi');
     }
 
     const result = await sendContactEmail({ name, email, phone, subject, message });
     if (!result.ok) {
       console.error('Contact email error:', result.error);
+      const ref = req.get('referer') || '';
+      if (ref.includes('/propertyinfo/')) {
+        const sep = ref.includes('?') ? '&' : '?';
+        return res.redirect(ref + sep + 'contact_error=E-posta%20g%C3%B6nderilemedi');
+      }
       return res.redirect('/contact?error=E-posta%20g%C3%B6nderilemedi');
+    }
+    const ref = req.get('referer') || '';
+    if (ref.includes('/propertyinfo/')) {
+      const sep = ref.includes('?') ? '&' : '?';
+      return res.redirect(ref + sep + 'contact=success');
     }
     return res.redirect('/contact?success=1');
   } catch (e) {
     console.error('Contact form handling failed:', e);
+    const ref = req.get('referer') || '';
+    if (ref.includes('/propertyinfo/')) {
+      const sep = ref.includes('?') ? '&' : '?';
+      return res.redirect(ref + sep + 'contact_error=Beklenmedik%20hata');
+    }
     return res.redirect('/contact?error=Beklenmedik%20hata');
   }
 });

@@ -119,64 +119,75 @@
         </div>
       </div>
 
-      <!-- Recent properties table -->
-      <div class="overflow-x-auto rounded-lg border border-[var(--border-color)] bg-white shadow-sm">
+      <!-- Recent properties list with details and passive/active actions -->
+      <div class="rounded-lg border border-[var(--border-color)] bg-white shadow-sm">
         <% if (recentProperties && recentProperties.length > 0) { %>
-          <table class="w-full text-left">
-            <thead class="bg-gray-50">
-              <tr>
-                <th class="p-3 sm:p-4 text-xs sm:text-sm font-semibold text-gray-600 hidden sm:table-cell">İlan ID</th>
-                <th class="p-3 sm:p-4 text-xs sm:text-sm font-semibold text-gray-600">Başlık</th>
-                <th class="p-3 sm:p-4 text-xs sm:text-sm font-semibold text-gray-600 hidden md:table-cell">Fiyat</th>
-                <th class="p-3 sm:p-4 text-xs sm:text-sm font-semibold text-gray-600 hidden lg:table-cell">Tip</th>
-                <th class="p-3 sm:p-4 text-xs sm:text-sm font-semibold text-gray-600 hidden lg:table-cell">Durum</th>
-                <th class="p-3 sm:p-4 text-xs sm:text-sm font-semibold text-gray-600 text-right">İşlemler</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-[var(--border-color)]">
-              <% recentProperties.forEach(function(p){ %>
-                <tr>
-                  <td class="p-3 sm:p-4 font-medium text-gray-800 hidden sm:table-cell">#<%= p.ilanId %></td>
-                  <td class="p-3 sm:p-4 text-gray-700">
-                    <div class="truncate max-w-[28ch] sm:max-w-[40ch] md:max-w-[56ch]">
-                      <%= p.ilanBaslik %>
+          <ul class="divide-y divide-[var(--border-color)]">
+            <% recentProperties.forEach(function(p){ %>
+              <% 
+                const firstPhoto = (p.photoIds && p.photoIds.split(',')[0] && p.photoIds.split(',')[0].trim()) || null;
+                const priceStr = '₺' + (parseInt(p.price || 0).toLocaleString('tr-TR'));
+                const st = (p.status || 'active');
+              %>
+              <li class="p-3 sm:p-4">
+                <div class="flex gap-3 sm:gap-4">
+                  <div class="w-28 h-20 sm:w-32 sm:h-24 rounded-md bg-gray-100 bg-center bg-cover flex-shrink-0" style="background-image:url('<%= firstPhoto ? ('/img/' + firstPhoto) : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='240'%3E%3Crect fill='%23e5e7eb' width='100%25' height='100%25'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='14' fill='%239ca3af'%3EG%C3%B6rsel Yok%3C/text%3E%3C/svg%3E" %>');"></div>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-start justify-between gap-3">
+                      <h3 class="text-base sm:text-lg font-semibold text-gray-900 truncate pr-2"><%= p.ilanBaslik %></h3>
+                      <div class="text-[var(--primary-color)] font-bold whitespace-nowrap"><%= priceStr %></div>
                     </div>
-                  </td>
-                  <td class="p-3 sm:p-4 text-gray-700 hidden md:table-cell">₺<%= parseInt(p.price || 0).toLocaleString('tr-TR') %></td>
-                  <td class="p-3 sm:p-4 text-gray-700 hidden lg:table-cell"><%= p.propertyType || '-' %></td>
-                  <td class="p-3 sm:p-4 hidden lg:table-cell">
-                    <% const st = (p.status || 'active'); %>
-                    <% if (st === 'active') { %>
-                      <span class="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800">Aktif</span>
-                    <% } else if (st === 'sold') { %>
-                      <span class="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-800">Satıldı</span>
-                    <% } else { %>
-                      <span class="inline-flex items-center rounded-full bg-yellow-100 px-3 py-1 text-sm font-medium text-yellow-800">Pasif</span>
-                    <% } %>
-                  </td>
-                  <td class="p-3 sm:p-4 text-right">
-                    <div class="flex items-center justify-end gap-3 whitespace-nowrap">
-                      <a href="/propertyinfo/<%= p.ilanId %>" target="_blank" class="text-sm font-medium text-[var(--primary-color)] hover:opacity-80 flex items-center gap-1">
-                        <span class="material-symbols-outlined text-base">visibility</span>
-                        Görüntüle
-                      </a>
-                      <% if (p.ilanId) { %>
-                        <a href="/admin/property/edit/<%= p.ilanId %>" class="text-sm font-medium text-[var(--primary-color)] hover:opacity-80 flex items-center gap-1">
-                          <span class="material-symbols-outlined text-base">edit</span>
-                          Düzenle
-                        </a>
-                      <% } else { %>
-                        <span class="text-sm font-medium text-gray-400 flex items-center gap-1">
-                          <span class="material-symbols-outlined text-base">edit</span>
-                          Düzenle
-                        </span>
+                    <div class="mt-1 flex items-center gap-2 text-xs sm:text-sm text-gray-600">
+                      <% if (p.propertyType) { %>
+                        <span class="inline-flex items-center rounded-md bg-gray-100 px-2 py-0.5 font-medium"><%= p.propertyType %></span>
+                      <% } %>
+                      <% if (p.address) { %>
+                        <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-base">location_on</span><span class="truncate max-w-[28ch] sm:max-w-[40ch]"><%= p.address %></span></span>
                       <% } %>
                     </div>
-                  </td>
-                </tr>
-              <% }) %>
-            </tbody>
-          </table>
+                    <div class="mt-2 text-sm text-gray-700">
+                      <span><%= p.ilanOda || '-' %> oda</span>
+                      <span class="mx-2">•</span>
+                      <span><%= p.ilanBoyut || '-' %> m²</span>
+                      <span class="mx-2">•</span>
+                      <span><%= p.ilanBanyo || '-' %> banyo</span>
+                    </div>
+                    <div class="mt-3 flex items-center justify-between">
+                      <div>
+                        <% if (st === 'active') { %>
+                          <span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">Aktif</span>
+                        <% } else if (st === 'sold') { %>
+                          <span class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800">Satıldı</span>
+                        <% } else { %>
+                          <span class="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">Pasif</span>
+                        <% } %>
+                      </div>
+                      <div class="flex items-center gap-2">
+                        <% if (st !== 'active') { %>
+                        <form action="/admin/property/<%= p.ilanId %>/status" method="POST">
+                          <input type="hidden" name="status" value="active" />
+                          <button type="submit" class="inline-flex items-center gap-1 rounded-md border border-green-200 px-3 py-1.5 text-xs sm:text-sm font-medium text-green-700 hover:bg-green-50"
+                            onclick="return confirm('Bu ilanı aktifleştirmek istediğinize emin misiniz?');">
+                            <span class="material-symbols-outlined text-base">check_circle</span>
+                            Aktif Et
+                          </button>
+                        </form>
+                        <% } %>
+                        <form action="/admin/property/<%= p.ilanId %>/status" method="POST">
+                          <input type="hidden" name="status" value="passive" />
+                          <button type="submit" class="inline-flex items-center gap-1 rounded-md border border-red-200 px-3 py-1.5 text-xs sm:text-sm font-medium text-red-700 hover:bg-red-50"
+                            onclick="return confirm('Bu ilanı pasife almak istediğinize emin misiniz?');">
+                            <span class="material-symbols-outlined text-base">do_not_disturb_on</span>
+                            Pasife Al
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            <% }) %>
+          </ul>
         <% } else { %>
           <div class="p-6 text-gray-500">Henüz ilan bulunmamaktadır.</div>
         <% } %>
