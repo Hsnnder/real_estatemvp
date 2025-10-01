@@ -18,7 +18,7 @@
     /* Homepage overrides */
     /* Softer, near-white translucent cards */
     --card-bg: rgba(255,255,255,0.7);
-    --footer-background: #EAC784;
+    --footer-background: rgba(234,199,132,0.85);
   }
   .site-nav { background: rgba(255,255,255,0.96); }
   /* Full-page background photo with subtle gray overlay */
@@ -67,7 +67,7 @@
 <div class="flex items-center gap-10">
 <div class="flex items-center gap-3 text-[var(--text-primary)]">
 <div class="w-6 h-6">
-  <img src="/brand/logo.jpeg" alt="Logo" class="w-6 h-6 object-contain rounded-md"/>
+  <img src="/brand/logo.png" onerror="this.onerror=null;this.src='/brand/logo.jpeg'" alt="Logo" class="w-6 h-6 object-contain" style="background-color:transparent;"/>
   </div>
 <h2 class="brand text-xl leading-tight">Hacı Polat</h2>
 </div>

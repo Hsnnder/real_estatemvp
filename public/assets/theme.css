@@ -8,8 +8,8 @@
   --card-background: #FFFFFF;
   --text-dark: #1F2937;
   --text-gray: #4B5563;
-  /* Footer set to beach tone to match buttons */
-  --footer-background: #EAC784;
+  /* Footer beach tone with slight transparency */
+  --footer-background: rgba(234,199,132,0.85);
   --footer-text: #E5E7EB;
 
   /* Mapped variables used across the app */
