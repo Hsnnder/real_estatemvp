@@ -8,7 +8,8 @@
   --card-background: #FFFFFF;
   --text-dark: #1F2937;
   --text-gray: #4B5563;
-  --footer-background: #004D4D;
+  /* Footer set to beach tone to match buttons */
+  --footer-background: #EAC784;
   --footer-text: #E5E7EB;
 
   /* Mapped variables used across the app */
@@ -86,7 +87,7 @@ body { background: var(--background); }
 }
 
 /* Modern sticky navbar styled similar to clean commerce headers */
-.site-nav { position: sticky; top: 0; z-index: 60; background: rgba(255,255,255,0.88); border-bottom: 1px solid var(--border-color); backdrop-filter: blur(8px); transition: background .25s ease, box-shadow .25s ease, padding .2s ease; }
+.site-nav { position: sticky; top: 0; z-index: 60; background: rgba(255,255,255,0.96); border-bottom: 1px solid var(--border-color); backdrop-filter: blur(8px); transition: background .25s ease, box-shadow .25s ease, padding .2s ease; }
 .site-nav .brand { color: var(--text-primary); font-weight: 700; letter-spacing: -0.015em; }
 .site-nav .nav-link { color: var(--text-primary); position: relative; padding: 12px 0; margin: 0 12px; text-decoration: none; }
 .site-nav .nav-link:hover { color: var(--primary-color); }
