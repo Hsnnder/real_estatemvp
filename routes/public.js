@@ -71,9 +71,12 @@ router.get('/propertyinfo/:id', async (req, res) => {
 
     if (property.photoIds) {
       const ids = property.photoIds.split(',').map(id => id.trim()).filter(Boolean);
-      property.photos = ids.map(id => `/img/${id}`);
+      // Medium for main slider, Thumbs for grid
+      property.photos = ids.map(id => `/img/${id}/1200`);
+      property.thumbs = ids.map(id => `/img/${id}/300`);
     } else {
       property.photos = [];
+      property.thumbs = [];
     }
 
     // Render without layout; this EJS has its own HTML skeleton

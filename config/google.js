@@ -374,17 +374,36 @@ class GoogleAPI {
       stream.push(fileBuffer);
       stream.push(null);
       
-      const response = await this.drive.files.create({
-        requestBody: {
-          name: fileName,
-          parents: [process.env.GOOGLE_DRIVE_FOLDER_ID]
-        },
-        media: {
-          mimeType: mimeType,
-          body: stream
-        },
-        supportsAllDrives: true
-      });
+      const parents = process.env.GOOGLE_DRIVE_FOLDER_ID && String(process.env.GOOGLE_DRIVE_FOLDER_ID).trim()
+        ? [String(process.env.GOOGLE_DRIVE_FOLDER_ID).trim()]
+        : undefined;
+      let response;
+      try {
+        response = await this.drive.files.create({
+          requestBody: {
+            name: fileName,
+            ...(parents ? { parents } : {})
+          },
+          media: {
+            mimeType: mimeType,
+            body: stream
+          },
+          supportsAllDrives: true
+        });
+      } catch (err) {
+        // Retry without parents if folder invalid/missing
+        const status = (err && err.code) || (err && err.response && err.response.status);
+        if (parents && (status === 404 || status === 400)) {
+          console.warn('Parent folder invalid. Retrying upload without parents...');
+          response = await this.drive.files.create({
+            requestBody: { name: fileName },
+            media: { mimeType: mimeType, body: stream },
+            supportsAllDrives: true
+          });
+        } else {
+          throw err;
+        }
+      }
 
       console.log('File created successfully:', response.data.id);
 

@@ -18,7 +18,10 @@ router.get('/:id', async (req, res) => {
     const id = req.params.id;
     if (!id) return res.status(400).send('Missing file id');
     const drive = getDriveSa();
-    if (!drive) return res.status(500).send('Drive not configured');
+    if (!drive) {
+      // Fallback to public URL if SA is not configured
+      return res.redirect(302, `https://drive.google.com/uc?export=view&id=${id}`);
+    }
 
     // Metadata for headers
     let meta;
@@ -32,7 +35,10 @@ router.get('/:id', async (req, res) => {
     } catch (e) {
       const status = (e && e.code) || (e && e.response && e.response.status);
       if (status === 404) return res.status(404).send('Not found');
-      if (status === 403) return res.status(403).send('Forbidden');
+      if (status === 403) {
+        // Public fallback if unauthorized for SA
+        return res.redirect(302, `https://drive.google.com/uc?export=view&id=${id}`);
+      }
       console.error('Drive meta error:', e && e.message);
       return res.status(500).send('Drive metadata failed');
     }
@@ -65,7 +71,10 @@ router.get('/:id/:w', async (req, res) => {
   w = Math.max(64, Math.min(w, 4096));
   try {
     const drive = getDriveSa();
-    if (!drive) return res.status(500).send('Drive not configured');
+    if (!drive) {
+      // Fallback to original if SA is not configured
+      return res.redirect(302, `https://drive.google.com/uc?export=view&id=${id}`);
+    }
     // Load metadata
     let meta;
     try {
@@ -78,7 +87,10 @@ router.get('/:id/:w', async (req, res) => {
     } catch (e) {
       const status = (e && e.code) || (e && e.response && e.response.status);
       if (status === 404) return res.status(404).send('Not found');
-      if (status === 403) return res.status(403).send('Forbidden');
+      if (status === 403) {
+        // Fallback to original if unauthorized for SA
+        return res.redirect(302, `https://drive.google.com/uc?export=view&id=${id}`);
+      }
       console.error('Drive meta error:', e && e.message);
       return res.status(500).send('Drive metadata failed');
     }
@@ -110,4 +122,3 @@ router.get('/:id/:w', async (req, res) => {
 });
 
 module.exports = router;
-

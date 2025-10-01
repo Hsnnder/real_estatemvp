@@ -20,89 +20,96 @@
           <p class="mt-2 text-lg text-[var(--text-secondary)]">Yeni bir mülk eklemek için lütfen aşağıdaki bilgileri doldurun.</p>
         </div>
 
-        <form class="space-y-6 bg-white p-8 rounded-lg shadow-sm border border-[var(--border-color)]" method="POST" action="<%= action === 'edit' ? ('/admin/property/edit/' + (property ? property.ilanId : '')) : '/admin/property/add' %>" enctype="multipart/form-data">
-          <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
-            <div class="sm:col-span-2">
-              <label class="block text-base font-medium" style="color: var(--accent-color)" for="ilanBaslik">İlan Başlığı</label>
-              <div class="mt-1">
-                <input class="form-input block w-full rounded-lg border-[var(--border-color)] bg-[var(--background)] p-4 text-base placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" id="ilanBaslik" name="ilanBaslik" placeholder="Örn: Şişli'de 3+1 Lüks Daire" type="text" value="<%= property ? property.ilanBaslik : '' %>" required />
-              </div>
-            </div>
-            <div class="sm:col-span-2">
-              <label class="block text-base font-medium" style="color: var(--accent-color)" for="ilanAciklama">İlan Açıklaması</label>
-              <div class="mt-1">
-                <textarea class="form-textarea block w-full rounded-lg border-[var(--border-color)] bg-[var(--background)] p-4 text-base placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" id="ilanAciklama" name="ilanAciklama" placeholder="Mülkünüzün özelliklerini ve avantajlarını detaylandırın." rows="4" required><%= property ? property.ilanAciklama : '' %></textarea>
-              </div>
-            </div>
-            <div>
-              <label class="block text-base font-medium" style="color: var(--accent-color)" for="price">Fiyat (TL)</label>
-              <div class="mt-1">
-                <input class="form-input block w-full rounded-lg border-[var(--border-color)] bg-[var(--background)] p-4 text-base placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" id="price" name="price" placeholder="5000000" type="number" value="<%= property ? property.price : '' %>" required />
-              </div>
-            </div>
-            <div>
-              <label class="block text-base font-medium" style="color: var(--accent-color)" for="propertyType">İlan Tipi</label>
-              <div class="mt-1">
-                <select class="form-select block w-full rounded-lg border-[var(--border-color)] bg-[var(--background)] p-4 text-base focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" id="propertyType" name="propertyType" required>
-                  <option value="">Seçiniz</option>
-                  <option value="Satılık" <%= property && property.propertyType === 'Satılık' ? 'selected' : '' %>>Satılık</option>
-                  <option value="Kiralık" <%= property && property.propertyType === 'Kiralık' ? 'selected' : '' %>>Kiralık</option>
-                </select>
-              </div>
-            </div>
-            <div>
-              <label class="block text-base font-medium" style="color: var(--accent-color)" for="ilanOda">Oda Sayısı</label>
-              <div class="mt-1">
-                <select class="form-select block w-full rounded-lg border-[var(--border-color)] bg-[var(--background)] p-4 text-base focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" id="ilanOda" name="ilanOda" required>
-                  <option value="">Seçiniz</option>
-                  <option value="1" <%= property && property.ilanOda === '1' ? 'selected' : '' %>>1+0</option>
-                  <option value="2" <%= property && property.ilanOda === '2' ? 'selected' : '' %>>1+1</option>
-                  <option value="3" <%= property && property.ilanOda === '3' ? 'selected' : '' %>>2+1</option>
-                  <option value="4" <%= property && property.ilanOda === '4' ? 'selected' : '' %>>3+1</option>
-                  <option value="5" <%= property && property.ilanOda === '5' ? 'selected' : '' %>>4+1</option>
-                </select>
-              </div>
-            </div>
-            <div>
-              <label class="block text-base font-medium" style="color: var(--accent-color)" for="ilanBanyo">Banyo Sayısı</label>
-              <div class="mt-1">
-                <input class="form-input block w-full rounded-lg border-[var(--border-color)] bg-[var(--background)] p-4 text-base placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" id="ilanBanyo" name="ilanBanyo" placeholder="2" type="number" min="1" value="<%= property ? property.ilanBanyo : '' %>" required />
-              </div>
-            </div>
-            <div>
-              <label class="block text-base font-medium" style="color: var(--accent-color)" for="ilanBoyut">Metrekare (m²)</label>
-              <div class="mt-1">
-                <input class="form-input block w-full rounded-lg border-[var(--border-color)] bg-[var(--background)] p-4 text-base placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" id="ilanBoyut" name="ilanBoyut" placeholder="150" type="number" min="1" value="<%= property ? property.ilanBoyut : '' %>" required />
-              </div>
-            </div>
-            
-            <div class="sm:col-span-2">
-              <label class="block text-base font-medium" style="color: var(--accent-color)" for="address">Adres</label>
-              <div class="mt-1">
-                <input class="form-input block w-full rounded-lg border-[var(--border-color)] bg-[var(--background)] p-4 text-base placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" id="address" name="address" placeholder="Mülkün tam adresini girin" type="text" value="<%= property ? (property.address || '') : '' %>" required />
-              </div>
-              <p class="mt-2 text-sm text-[var(--text-secondary)]">Adres girildiğinde koordinatlar (enlem/boylam) otomatik belirlenir.</p>
-            </div>
-          </div>
-
-          <div>
-            <h2 class="text-xl font-bold" style="color: var(--accent-color)">Fotoğraf Yükleme</h2>
-            <div class="mt-4 rounded-lg border-2 border-dashed border-[var(--border-color)] px-6 pt-5 pb-6">
-              <div class="space-y-1 text-center">
-                <span class="material-symbols-outlined text-5xl text-gray-400">cloud_upload</span>
-                <div class="flex justify-center text-base text-[var(--text-secondary)]">
-                  <label class="relative cursor-pointer rounded-md bg-white font-medium text-[var(--primary-color)] focus-within:outline-none focus-within:ring-2 focus-within:ring-[var(--primary-color)] focus-within:ring-offset-2 hover:text-[var(--primary-color-light)] px-3 py-1" for="photos">
-                    <span>Dosya yükle</span>
-                    <input class="sr-only" id="photos" name="photos" type="file" accept="image/*" multiple />
-                  </label>
-                  <p class="pl-2">veya sürükleyip bırakın</p>
+        <form class="bg-white p-6 sm:p-8 rounded-lg shadow-sm border border-[var(--border-color)]" method="POST" action="<%= action === 'edit' ? ('/admin/property/edit/' + (property ? property.ilanId : '')) : '/admin/property/add' %>" enctype="multipart/form-data">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+            <!-- Sol: Bilgi formu -->
+            <div class="space-y-6">
+              <div>
+                <label class="block text-base font-medium" style="color: var(--accent-color)" for="ilanBaslik">İlan Başlığı</label>
+                <div class="mt-1">
+                  <input class="form-input block w-full rounded-lg border-[var(--border-color)] bg-[var(--background)] p-4 text-base placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" id="ilanBaslik" name="ilanBaslik" placeholder="Örn: Şişli'de 3+1 Lüks Daire" type="text" value="<%= property ? property.ilanBaslik : '' %>" required />
                 </div>
-                <p class="text-sm text-gray-500">PNG, JPG, GIF 10MB'a kadar</p>
+              </div>
+              <div>
+                <label class="block text-base font-medium" style="color: var(--accent-color)" for="ilanAciklama">İlan Açıklaması</label>
+                <div class="mt-1">
+                  <textarea class="form-textarea block w-full rounded-lg border-[var(--border-color)] bg-[var(--background)] p-4 text-base placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" id="ilanAciklama" name="ilanAciklama" placeholder="Mülkünüzün özelliklerini ve avantajlarını detaylandırın." rows="6" required><%= property ? property.ilanAciklama : '' %></textarea>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-base font-medium" style="color: var(--accent-color)" for="price">Fiyat (TL)</label>
+                  <input class="form-input w-full rounded-lg border-[var(--border-color)] bg-[var(--background)] p-4 text-base placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" id="price" name="price" placeholder="5000000" type="number" value="<%= property ? property.price : '' %>" required />
+                </div>
+                <div>
+                  <label class="block text-base font-medium" style="color: var(--accent-color)" for="propertyType">İlan Tipi</label>
+                  <select class="form-select w-full rounded-lg border-[var(--border-color)] bg-[var(--background)] p-4 text-base focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" id="propertyType" name="propertyType" required>
+                    <option value="">Seçiniz</option>
+                    <option value="Satılık" <%= property && property.propertyType === 'Satılık' ? 'selected' : '' %>>Satılık</option>
+                    <option value="Kiralık" <%= property && property.propertyType === 'Kiralık' ? 'selected' : '' %>>Kiralık</option>
+                  </select>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label class="block text-base font-medium" style="color: var(--accent-color)" for="ilanOda">Oda</label>
+                  <select class="form-select w-full rounded-lg border-[var(--border-color)] bg-[var(--background)] p-4 text-base focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" id="ilanOda" name="ilanOda" required>
+                    <option value="">Seçiniz</option>
+                    <option value="1" <%= property && property.ilanOda === '1' ? 'selected' : '' %>>1+0</option>
+                    <option value="2" <%= property && property.ilanOda === '2' ? 'selected' : '' %>>1+1</option>
+                    <option value="3" <%= property && property.ilanOda === '3' ? 'selected' : '' %>>2+1</option>
+                    <option value="4" <%= property && property.ilanOda === '4' ? 'selected' : '' %>>3+1</option>
+                    <option value="5" <%= property && property.ilanOda === '5' ? 'selected' : '' %>>4+1</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-base font-medium" style="color: var(--accent-color)" for="ilanBanyo">Banyo</label>
+                  <input class="form-input w-full rounded-lg border-[var(--border-color)] bg-[var(--background)] p-4 text-base placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" id="ilanBanyo" name="ilanBanyo" placeholder="2" type="number" min="1" value="<%= property ? property.ilanBanyo : '' %>" required />
+                </div>
+                <div>
+                  <label class="block text-base font-medium" style="color: var(--accent-color)" for="ilanBoyut">m²</label>
+                  <input class="form-input w-full rounded-lg border-[var(--border-color)] bg-[var(--background)] p-4 text-base placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" id="ilanBoyut" name="ilanBoyut" placeholder="150" type="number" min="1" value="<%= property ? property.ilanBoyut : '' %>" required />
+                </div>
+              </div>
+              <div>
+                <label class="block text-base font-medium" style="color: var(--accent-color)" for="address">Adres</label>
+                <input class="form-input w-full rounded-lg border-[var(--border-color)] bg-[var(--background)] p-4 text-base placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" id="address" name="address" placeholder="Mülkün tam adresini girin" type="text" value="<%= property ? (property.address || '') : '' %>" required />
+                <p class="mt-2 text-sm text-[var(--text-secondary)]">Adres girildiğinde koordinatlar (enlem/boylam) otomatik belirlenir.</p>
               </div>
             </div>
+
+            <!-- Sağ: Fotoğraf paneli (stickly / scrollable) -->
+            <aside class="space-y-3 bg-white rounded-lg border border-[var(--border-color)] p-4 lg:sticky top-6 max-h-[78vh] overflow-auto self-start">
+              <div class="flex items-center justify-between">
+                <h2 class="text-base font-semibold" style="color: var(--accent-color)">Fotoğraflar</h2>
+                <label class="inline-flex items-center gap-2 rounded-md border border-[var(--border-color)] bg-white px-3 py-1.5 text-sm font-medium text-[var(--primary-color)] hover:bg-[var(--primary-color)] hover:text-white cursor-pointer" for="photos">
+                  <span class="material-symbols-outlined text-base">cloud_upload</span>
+                  Ekle
+                  <input class="sr-only" id="photos" name="photos" type="file" accept="image/*" multiple />
+                </label>
+              </div>
+              <% if (action === 'edit' && property && property.photoIds) { 
+                   const _ids = property.photoIds.split(',').map(s=>s.trim()).filter(Boolean);
+                 %>
+                <div>
+                  <h3 class="text-xs font-semibold text-[var(--text-secondary)] mb-2">Kayıtlı</h3>
+                  <div class="grid gap-2 overflow-x-auto pb-2" style="grid-auto-flow: column; grid-auto-columns: 6rem; grid-template-rows: repeat(3, 6rem); -webkit-overflow-scrolling: touch;">
+                    <% _ids.forEach(function(id){ %>
+                      <div class="rounded-md overflow-hidden border border-[var(--border-color)] bg-gray-100" style="width:6rem;height:6rem;">
+                        <img src="/img/<%= id %>/300" alt="Foto" class="w-full h-full object-cover" loading="lazy"/>
+                      </div>
+                    <% }) %>
+                  </div>
+                </div>
+              <% } %>
+              <div>
+                <h3 class="text-xs font-semibold text-[var(--text-secondary)] mb-2">Yeni Önizleme</h3>
+                <div id="photoPreview" class="grid gap-2 overflow-x-auto pb-2" style="grid-auto-flow: column; grid-auto-columns: 6rem; grid-template-rows: repeat(3, 6rem); -webkit-overflow-scrolling: touch;"></div>
+              </div>
+            </aside>
           </div>
 
-          <div class="flex items-center justify-between pt-4">
+          <div class="flex items-center justify-between pt-6">
             <a href="/admin/properties" class="inline-flex items-center rounded-lg border border-[var(--border-color)] bg-white px-5 py-3 text-base font-medium hover:bg-[var(--primary-color-light)]/20">Geri Dön</a>
             <button class="flex min-w-[140px] items-center justify-center rounded-lg bg-[var(--primary-color)] py-3 px-6 text-base font-bold text-white shadow-sm transition hover:bg-[var(--primary-color-light)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] focus:ring-offset-2" type="submit">
               <%= action === 'add' ? 'İlanı Kaydet' : 'Güncelle' %>
@@ -113,4 +120,46 @@
     </main>
   </div>
 </div>
+<script>
+  (function(){
+    try {
+      var input = document.getElementById('photos');
+      var preview = document.getElementById('photoPreview');
+      if (!input || !preview) return;
+
+      // Accumulate selected files across multiple chooser interactions (if supported)
+      var canAccumulate = (typeof DataTransfer === 'function');
+      var dt = canAccumulate ? new DataTransfer() : null;
+      var seen = new Set(); // avoid duplicates (name+size+lastModified)
+
+      input.addEventListener('change', function(){
+        if (!input.files || !input.files.length) return;
+        Array.from(input.files).forEach(function(file){
+          var key = [file.name, file.size, file.lastModified].join('|');
+          if (seen.has(key)) return;
+          if (canAccumulate) {
+            // Add to DataTransfer so input.files keeps previous selections
+            dt.items.add(file);
+            seen.add(key);
+          }
+
+          // Append preview (do not clear previous)
+          var url = URL.createObjectURL(file);
+          var wrap = document.createElement('div');
+          wrap.className = 'rounded-md overflow-hidden border border-[var(--border-color)] bg-gray-100';
+          wrap.style.width = '6rem';
+          wrap.style.height = '6rem';
+          var img = document.createElement('img');
+          img.src = url; img.alt = file.name; img.className = 'w-full h-full object-cover';
+          wrap.appendChild(img);
+          preview.appendChild(wrap);
+        });
+        // Rebind accumulated files to the input for submission (if supported)
+        if (canAccumulate) {
+          input.files = dt.files;
+        }
+      });
+    } catch(_) {}
+  })();
+</script>
 </body></html>

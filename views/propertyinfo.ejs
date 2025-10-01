@@ -130,8 +130,8 @@
 <div class="mt-8">
 <h2 class="text-2xl font-bold text-gray-900">Fotoğraflar</h2>
 <div id="thumbGrid" class="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
-  <% if (property && property.photos && property.photos.length) { %>
-    <% property.photos.forEach(function(url, idx){ %>
+  <% if (property && property.thumbs && property.thumbs.length) { %>
+    <% property.thumbs.forEach(function(url, idx){ %>
       <button type="button" class="h-40 sm:h-48 w-full rounded-lg bg-cover bg-center ring-0 focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)]" style='background-image: url("<%= url %>");' data-index="<%= idx %>"></button>
     <% }); %>
   <% } else { %>
