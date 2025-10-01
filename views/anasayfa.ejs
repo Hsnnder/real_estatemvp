@@ -21,8 +21,8 @@
   body.page-public {
     background-image: linear-gradient(rgba(120,120,120,0.35), rgba(120,120,120,0.35)), url('/assets/home-hero.jpg');
     background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+    background-position: top center; /* start from top, reveal bottom as you scroll */
+    background-attachment: scroll;   /* allow background to move with page scroll */
     background-repeat: no-repeat;
   }
 </style>
