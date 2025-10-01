@@ -25,6 +25,33 @@
     background-attachment: scroll;   /* allow background to move with page scroll */
     background-repeat: no-repeat;
   }
+  /* Soft background behind hero title */
+  .hero-title-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    background: linear-gradient(90deg, rgba(0,0,0,0.45), rgba(0,0,0,0.2));
+    backdrop-filter: blur(2px);
+  }
+  /* Filter bar visibility on photo */
+  .filter-bar {
+    background: rgba(0,0,0,0.35);
+    border-radius: 12px;
+  }
+  .filter-bar input::placeholder { color: rgba(255,255,255,0.7); }
+  .filter-bar select { color: #fff; }
+  /* Beach-tone buttons */
+  .beach-btn { 
+    background: #EAC784; 
+    color: #fff; 
+    border: 1px solid transparent; 
+    transition: background .2s ease, color .2s ease, border-color .2s ease; 
+  }
+  .beach-btn:hover { 
+    background: #fff; 
+    color: #EAC784; 
+    border-color: #EAC784; 
+  }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
 <!-- Tailwind CSS built locally; custom utilities are in site.css -->
@@ -69,24 +96,24 @@
 <main class="px-10 lg:px-40 flex flex-1 justify-center py-10">
 <div class="layout-content-container flex flex-col max-w-[1280px] flex-1">
 <div class="px-4 py-8 text-center fade-in">
-<h1 class="text-4xl font-bold text-[var(--text-primary)] mb-4">Hayalinizdeki Evi Bulun</h1>
-<p class="text-lg text-[var(--text-secondary)] mb-8">Seveceğiniz bir yaşam alanı keşfedin.</p>
+<h1 class="text-4xl font-bold text-white mb-4"><span class="hero-title-badge">Hayalinizdeki Evi Bulun</span></h1>
+<p class="text-lg text-white/90 mb-8">Seveceğiniz bir yaşam alanı keşfedin.</p>
 <div class="max-w-3xl mx-auto">
 <form action="/properties" method="GET" class="flex flex-col md:flex-row items-stretch">
-<div class="flex flex-wrap items-center p-2 md:p-2 gap-2 md:gap-5 w-full">
+<div class="flex flex-wrap items-center p-2 md:p-2 gap-2 md:gap-5 w-full filter-bar">
   <div class="flex w-full items-center justify-start gap-4 px-1">
     <label class="flex items-center gap-2 cursor-pointer whitespace-nowrap">
-      <input class="form-radio text-[var(--primary-color)] focus:ring-[var(--primary-color)]" name="propertyType" type="radio" value="Kiralık">
-      <span class="text-[var(--text-secondary)]">Kiralık</span>
+      <input class="form-radio" style="accent-color:#EAC784" name="propertyType" type="radio" value="Kiralık">
+      <span class="text-white">Kiralık</span>
     </label>
     <label class="flex items-center gap-2 cursor-pointer whitespace-nowrap">
-      <input class="form-radio text-[var(--primary-color)] focus:ring-[var(--primary-color)]" name="propertyType" type="radio" value="Satılık">
-      <span class="text-[var(--text-secondary)]">Satılık</span>
+      <input class="form-radio" style="accent-color:#EAC784" name="propertyType" type="radio" value="Satılık">
+      <span class="text-white">Satılık</span>
     </label>
   </div>
-  <input type="number" name="price_min" placeholder="Min ₺" class="h-12 flex-1 min-w-0 rounded-md border border-[var(--border-color)] px-3 text-sm"/>
-  <input type="number" name="price_max" placeholder="Max ₺" class="h-12 flex-1 min-w-0 rounded-md border border-[var(--border-color)] px-3 text-sm"/>
-  <select name="rooms" class="h-12 flex-1 min-w-0 rounded-md border border-[var(--border-color)] px-3 text-sm">
+  <input type="number" name="price_min" placeholder="Min ₺" class="h-12 flex-1 min-w-0 rounded-md border border-white/40 bg-transparent text-white px-3 text-sm focus:ring-white focus:border-white"/>
+  <input type="number" name="price_max" placeholder="Max ₺" class="h-12 flex-1 min-w-0 rounded-md border border-white/40 bg-transparent text-white px-3 text-sm focus:ring-white focus:border-white"/>
+  <select name="rooms" class="h-12 flex-1 min-w-0 rounded-md border border-white/40 bg-transparent text-white px-3 text-sm focus:ring-white focus:border-white">
     <option value="">Oda</option>
     <option value="1">1+0</option>
     <option value="2">1+1</option>
@@ -94,7 +121,7 @@
     <option value="4">3+1</option>
     <option value="5">4+1</option>
   </select>
-  <button type="submit" class="flex w-full md:w-auto cursor-pointer items-center justify-center overflow-hidden rounded-md h-12 px-6 bg-[var(--primary-color)] text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-[var(--primary-color-light)] transition-colors md:ml-2">
+  <button type="submit" class="flex w-full md:w-auto cursor-pointer items-center justify-center overflow-hidden rounded-md h-12 px-6 beach-btn text-base font-bold leading-normal tracking-[0.015em] md:ml-2">
     <span class="truncate">Ara</span>
   </button>
 </div>
