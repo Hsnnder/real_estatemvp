@@ -87,24 +87,80 @@ body { background: var(--background); }
 }
 
 /* Modern sticky navbar styled similar to clean commerce headers */
-.site-nav { position: sticky; top: 0; z-index: 60; background: rgba(255,255,255,0.96); border-bottom: 1px solid var(--border-color); backdrop-filter: blur(8px); transition: background .25s ease, box-shadow .25s ease, padding .2s ease; }
-.site-nav .brand-row { display: flex; align-items: center; height: 40px; }
-.brand-logo { height: 40px; width: auto; display: block; background: transparent; }
-/* Visually enlarge logo without changing navbar height */
-.brand-logo--xl {
-  transform: translateY(-7px) scale(1.35);
-  transform-origin: center;
+.site-nav { 
+  position: sticky; 
+  top: 0; 
+  z-index: 60; 
+  background: rgba(255,255,255,0.8); 
+  border-bottom: 1px solid var(--border-color); 
+  backdrop-filter: blur(8px); 
+  transition: background .25s ease, box-shadow .25s ease, padding .2s ease; 
 }
 
-@media (max-width: 480px) {
-  .brand-logo--xl { transform: translateY(-4px) scale(1.2); }
+/* Brand row sabit kalır ama overflow serbest */
+.site-nav .brand-row { 
+  display: flex; 
+  align-items: center; 
+  height: 40px; 
+  overflow: visible;   /* taşan logoyu kesme */
 }
-.site-nav .brand { color: var(--text-primary); font-weight: 700; letter-spacing: -0.015em; }
-.site-nav .nav-link { color: var(--text-primary); position: relative; padding: 12px 0; margin: 0 12px; text-decoration: none; }
+
+/* Logo base ayar */
+.brand-logo { 
+  display: block; 
+  width: auto; 
+  height: 40px;        /* nav yüksekliğine göre */
+  background: transparent; 
+  transition: transform .25s ease;
+}
+
+/* Görsel olarak büyüt (navbar büyümez) */
+.brand-logo--xl {
+  transform: scale(3.0);      /* istediğin kadar büyüt */
+  transform-origin: center;   /* ortadan büyüsün */
+}
+
+/* Mobilde biraz daha küçük scale */
+@media (max-width: 480px) {
+  .brand-logo--xl { transform: scale(1.4); }
+}
+
+/* Brand yazı */
+.site-nav .brand { 
+  color: var(--text-primary); 
+  font-weight: 700; 
+  letter-spacing: -0.015em; 
+}
+
+/* Navigation links */
+.site-nav .nav-link { 
+  color: var(--text-primary); 
+  position: relative; 
+  padding: 12px 0; 
+  margin: 0 12px; 
+  text-decoration: none; 
+}
 .site-nav .nav-link:hover { color: var(--primary-color); }
-.site-nav .nav-link::after { content: ""; position: absolute; left: 0; bottom: -6px; height: 2px; width: 0; background: var(--primary-color); transition: width .22s ease; }
-.site-nav .nav-link:hover::after, .site-nav .nav-link.active::after { width: 100%; }
-.site-nav.is-scrolled { background: #fff; box-shadow: 0 6px 18px rgba(0,0,0,0.06); }
+.site-nav .nav-link::after { 
+  content: ""; 
+  position: absolute; 
+  left: 0; 
+  bottom: -6px; 
+  height: 2px; 
+  width: 0; 
+  background: var(--primary-color); 
+  transition: width .22s ease; 
+}
+.site-nav .nav-link:hover::after, 
+.site-nav .nav-link.active::after { 
+  width: 100%; 
+}
+
+/* Scroll sonrası efekti */
+.site-nav.is-scrolled { 
+  background: #fff; 
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06); 
+}
 
 /* Footer theming */
 footer { background: var(--footer-background); color: var(--footer-text); }
