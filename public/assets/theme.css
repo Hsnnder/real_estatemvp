@@ -16,8 +16,11 @@
   --background: var(--background-light);
   --text-primary: var(--text-dark);
   --text-secondary: var(--text-gray);
-  --primary-color: var(--primary-green);
-  --primary-color-light: var(--primary-green-dark);
+  /* Beach palette as primary across the public site */
+  --beach: #EAC784;
+  --beach-dark: #D7AE66;
+  --primary-color: var(--beach);
+  --primary-color-light: var(--beach-dark);
   --border-color: #E5E7EB;
   --accent-color: var(--text-dark);
   --card-bg: var(--card-background);
@@ -95,6 +98,51 @@ body { background: var(--background); }
   border-bottom: 1px solid var(--border-color); 
   backdrop-filter: blur(8px); 
   transition: background .25s ease, box-shadow .25s ease, padding .2s ease; 
+}
+
+/* Beach-tone primary buttons (global helper) */
+.beach-btn { 
+  background: var(--primary-color); 
+  color: #fff; 
+  border: 1px solid transparent; 
+  transition: background .2s ease, color .2s ease, border-color .2s ease; 
+}
+.beach-btn:hover { 
+  background: #fff; 
+  color: var(--primary-color); 
+  border-color: var(--primary-color); 
+}
+
+/* Public pages: default buttons take beach tone */
+body.page-public button { 
+  background: var(--primary-color); 
+  color: #fff; 
+  border: 1px solid transparent; 
+  transition: background .2s ease, color .2s ease, border-color .2s ease; 
+}
+body.page-public button:hover { 
+  background: #fff; 
+  color: var(--primary-color); 
+  border-color: var(--primary-color); 
+}
+
+/* Public pages: form controls accent */
+body.page-public input[type="radio"],
+body.page-public input[type="checkbox"] { accent-color: var(--primary-color); }
+
+/* Public pages: link buttons adopting beach style if marked */
+body.page-public a.btn, 
+body.page-public a.button { 
+  background: var(--primary-color); 
+  color: #fff; 
+  border: 1px solid transparent; 
+  transition: background .2s ease, color .2s ease, border-color .2s ease; 
+}
+body.page-public a.btn:hover, 
+body.page-public a.button:hover { 
+  background: #fff; 
+  color: var(--primary-color); 
+  border-color: var(--primary-color); 
 }
 
 /* Brand row sabit kalır ama overflow serbest */
