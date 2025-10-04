@@ -121,6 +121,16 @@
 
       <!-- Recent properties list with details and passive/active actions -->
       <div class="rounded-lg border border-[var(--border-color)] bg-white shadow-sm">
+        <div class="flex items-center justify-between p-3 sm:p-4 border-b border-[var(--border-color)]">
+          <h3 class="text-base sm:text-lg font-semibold" style="color: var(--accent-color)">Son İlanlar</h3>
+          <form method="GET" action="/admin" class="flex items-center gap-2 text-sm">
+            <label for="sort" class="text-gray-600">Sırala:</label>
+            <select id="sort" name="sort" class="form-select rounded-md border-gray-300 bg-white py-1.5 pr-8 text-gray-800 focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]">
+              <option value="new" <%= (typeof sort !== 'undefined' ? sort : 'new') === 'new' ? 'selected' : '' %>>Tarihe Göre (Yeni)</option>
+              <option value="old" <%= (typeof sort !== 'undefined' ? sort : 'new') === 'old' ? 'selected' : '' %>>Tarihe Göre (Eski)</option>
+            </select>
+          </form>
+        </div>
         <% if (recentProperties && recentProperties.length > 0) { %>
           <ul class="divide-y divide-[var(--border-color)]">
             <% recentProperties.forEach(function(p){ %>
@@ -176,9 +186,9 @@
                         <form action="/admin/property/<%= p.ilanId %>/status" method="POST">
                           <input type="hidden" name="status" value="passive" />
                           <button type="submit" class="inline-flex items-center gap-1 rounded-md border border-red-200 px-3 py-1.5 text-xs sm:text-sm font-medium text-red-700 hover:bg-red-50"
-                            onclick="return confirm('Bu ilanı pasife almak istediğinize emin misiniz?');">
+                            onclick="return confirm('Bu ilanı kaldırmak istediğinize emin misiniz?');">
                             <span class="material-symbols-outlined text-base">do_not_disturb_on</span>
-                            Pasife Al
+                            İlanı Kaldır
                           </button>
                         </form>
                       </div>

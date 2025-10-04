@@ -64,6 +64,17 @@ router.post('/login', (req, res) => {
 // Admin dashboard
 router.get('/', requireAuth, async (req, res) => {
   const all = await googleAPI.getAllProperties();
+  // Sort by createdAt (desc) by default; allow override via ?sort=old
+  const sort = (req.query && req.query.sort) ? String(req.query.sort) : 'new';
+  const getStamp = (p) => {
+    if (p.createdAt) {
+      const t = Date.parse(p.createdAt);
+      if (!Number.isNaN(t)) return t;
+    }
+    const idNum = parseInt(p.ilanId, 10);
+    return Number.isNaN(idNum) ? 0 : idNum;
+  };
+  const sorted = [...all].sort((a, b) => sort === 'old' ? (getStamp(a) - getStamp(b)) : (getStamp(b) - getStamp(a)));
   const stats = {
     totalProperties: all.length,
     activeProperties: all.filter(p => p.status === 'active').length,
@@ -74,7 +85,8 @@ router.get('/', requireAuth, async (req, res) => {
   res.render('admin/dashboard', { 
     title: 'Admin Paneli',
     stats,
-    recentProperties: all.slice(0, 5),
+    recentProperties: sorted.slice(0, 5),
+    sort,
     driveAuthorized: googleAPI.isDriveAuthorized(),
     layout: false
   });

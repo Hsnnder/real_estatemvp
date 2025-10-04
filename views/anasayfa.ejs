@@ -43,7 +43,18 @@
     border-radius: 12px;
   }
   .filter-bar input::placeholder { color: rgba(255,255,255,0.7); }
-  .filter-bar select { color: #fff; }
+  .filter-bar select { 
+    color: #fff; 
+    background: rgba(0,0,0,0.35); 
+    border-color: rgba(255,255,255,0.4);
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
+    appearance: none;
+  }
+  /* Remove number input spinners for cleaner look */
+  .filter-bar input[type="number"]::-webkit-outer-spin-button,
+  .filter-bar input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .filter-bar input[type="number"] { -moz-appearance: textfield; }
   /* Beach-tone buttons */
   .beach-btn { 
     background: #EAC784; 
